@@ -8,9 +8,9 @@ function App() {
     <>
       <div id="main">
         <BrowserRouter>
-          <div id="header">
+          <header>
             <Header />
-          </div>
+          </header>
 
           <Routes>
             <Route path='/' element={<Landing />} />

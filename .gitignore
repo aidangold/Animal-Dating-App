@@ -1,2 +1,5 @@
 frontend/.yarnrc.yml
 frontend/.yarn/install-state.gz
+frontend/.yarn/
+frontend/.pnp.loader.mjs
+frontend/.pnp.cjs
