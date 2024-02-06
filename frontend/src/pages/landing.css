@@ -1,0 +1,21 @@
+.landing-header{
+    width: 100%;
+    height: 600px;
+    background-image: url("../images/landing-01.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.9;
+    margin-top: -100px;
+    z-index: -99;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.landing-slogan{
+    font-size: 52px;
+    display: flex;
+    width: 350px;
+    padding-left: 50px;
+}
