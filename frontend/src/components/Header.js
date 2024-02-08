@@ -23,6 +23,7 @@ export default function Header() {
                     <Link to="/">OSU Adoption Center</Link>
                 </div>
                 <div className="header-nav">
+                    <a href="/match">Match with Pets</a>
                     <button>Sign In</button>
                     <button>Register</button>
                 </div>
