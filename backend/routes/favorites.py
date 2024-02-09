@@ -39,4 +39,25 @@ def get_favorites_by_user_id():
     favorites.append(favorite_pet_data)
 
   return jsonify(favorites)
-    
+
+@favorites_blueprint.route('/favorites/remove', methods=['POST'])    
+def unfavorite_pet_for_user():
+  data = request.get_json()
+  requesting_user_id = data.get('userID')
+  requesting_pet_id = data.get('petID')
+
+  print('✅', requesting_user_id)
+  print('✅', requesting_user_id)
+
+  query = text('''
+    DELETE FROM favorites
+    WHERE user_id = :user_id
+    AND pet_id = :pet_id
+               ''')
+  
+  result = db.session.execute(query, {'user_id': requesting_user_id, 'pet_id': requesting_pet_id})
+
+  db.session.commit()
+
+  if result.rowcount >= 1:
+    return jsonify({'message': 'The pet has succesfully been unfavorited'})
