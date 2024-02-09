@@ -46,9 +46,6 @@ def unfavorite_pet_for_user():
   requesting_user_id = data.get('userID')
   requesting_pet_id = data.get('petID')
 
-  print('✅', requesting_user_id)
-  print('✅', requesting_user_id)
-
   query = text('''
     DELETE FROM favorites
     WHERE user_id = :user_id
