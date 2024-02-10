@@ -1,5 +1,11 @@
+import Photocards from '../components/Photocards';
+
 export default function Matching() {
     return (
-        <div>This is the matching page.</div>
+        <div className="matching-main">
+            This is the matching page.
+            
+            <Photocards />
+        </div>
     )
 }

@@ -1,0 +1,37 @@
+{
+    "pets": [
+        {
+            "id": 0,
+            "name": "Orion",
+            "type": "Cat",
+            "sex": "Male",
+            "age": "2 y",
+            "weight": "6 lbs",
+            "date": "Jun 2023",
+            "status": "Pending Adoption",
+            "photo": "orion"
+        },
+        {
+            "id": 1,
+            "name": "Winter",
+            "type": "Dog",
+            "sex": "Female",
+            "age": "1 y",
+            "weight": "27 lbs",
+            "date": "Jan 2024",
+            "status": "Available",
+            "photo": "winter"
+        },
+        {
+            "id": 2,
+            "name": "Queenie",
+            "type": "Cat",
+            "sex": "Female",
+            "age": "2 y",
+            "weight": "12 lbs",
+            "date": "Aug 2023",
+            "status": "Not Available",
+            "photo": "queenie"
+        }
+    ]
+}
