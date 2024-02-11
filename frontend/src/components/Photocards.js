@@ -1,24 +1,37 @@
 import data from '../sample/pets.json';
+import { lightBlue } from '@mui/material/colors';
+import PetsRoundedIcon from '@mui/icons-material/PetsRounded';
+import WcRoundedIcon from '@mui/icons-material/WcRounded';
+import TodayRoundedIcon from '@mui/icons-material/TodayRounded';
+import MonitorWeightRoundedIcon from '@mui/icons-material/MonitorWeightRounded';
+import EventAvailableRoundedIcon from '@mui/icons-material/EventAvailableRounded';
+import './photocards.css';
 
 export default function Photocard() {
     const petdata = data.pets.map((pet) => (
-        <li key={pet.id}>
+        <div className="photocard" key={pet.petID}>
             <img
-                src={require('../sample/photos/' + pet.photo + '.jpg')}
+                src={require('../sample/photos/' + pet.petPicture + '.jpg')}
                 height={400}
                 alt={pet.name}
             />
-            <h2>{pet.name}</h2>
+            <h2>{pet.petName}</h2>
             <ul>
-                <li className="pet-sex">{pet.sex}</li>
-                <li className="pet-age">{pet.age}</li>
-                <li className="pet-weight">{pet.weight}</li>
-                <li className="pet-date">{pet.date}</li>
+                <li><PetsRoundedIcon sx={{ fontSize: 16, color: lightBlue[900]}} /></li>
+                <li>{pet.petType}</li>
+                <li><WcRoundedIcon sx={{ fontSize: 16, color: lightBlue[900]}} /></li>
+                <li>{pet.petSex}</li>
+                <li><TodayRoundedIcon sx={{ fontSize: 16, color: lightBlue[900]}} /></li>
+                <li>{pet.petAge}</li>
+                <li><MonitorWeightRoundedIcon sx={{ fontSize: 16, color: lightBlue[900]}} /></li>
+                <li>{pet.petWeight}</li>
+                <li><EventAvailableRoundedIcon sx={{ fontSize: 16, color: lightBlue[900]}} /></li>
+                <li>{pet.addedDate}</li>
             </ul>
-            <p>{pet.status}</p>
-        </li>
+            <h3>{pet.petAvailability}</h3>
+        </div>
     ))
     return (
-        <ul>{petdata}</ul>
+        <div className="photocards">{petdata}</div>
     )
 }
