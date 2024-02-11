@@ -24,8 +24,8 @@ export default function Header() {
                 </div>
                 <div className="header-nav">
                     <a href="/match">Match with Pets</a>
-                    <button>Sign In</button>
-                    <button>Register</button>
+                    <button>Sign Up</button>
+                    <button>Log In</button>
                 </div>
             </div>
         </nav>

@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Calistoga&family=League+Gothic&family=Poppins&display=swap');
+
 .landing-header{
     width: 100%;
-    height: 600px;
+    height: 65vh;
     background-image: url("../images/landing-01.jpg");
     background-position: center;
     background-repeat: no-repeat;
@@ -13,9 +15,31 @@
     justify-content: space-around;
 }
 
+/* Text shadow effect from https://codepen.io/juanbrujo/pen/DBKxxM by Jorge Epuñan */
 .landing-slogan{
-    font-size: 52px;
+    font-family: 'Calistoga', serif;
+    font-size: 3.5rem;
+    color: #E35D7B;
+    letter-spacing: 0.05em;
     display: flex;
-    width: 350px;
-    padding-left: 50px;
+    width: 20vw;
+    margin-left: 10vw;
+    margin-top: 5vh;
+    text-shadow: 
+      4px 4px 0px #fff, 
+      7px 7px 0px rgba(0, 0, 0, 0.2);
+}
+
+.landing-welcome{
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    color: #4A4A4A;
+}
+
+.landing-welcome h1{
+    font-family: 'League Gothic', sans-serif;
+    font-size: 3em;
+    color: #5086A5;
 }
