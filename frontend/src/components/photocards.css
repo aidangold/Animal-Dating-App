@@ -57,3 +57,12 @@
         padding-right: 3px;
     }
 }
+
+.like-button {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    top: -40px; /* this is like this because the card form is larger then the colored area so neg it to get higher */
+    left: 10px; 
+}
+
