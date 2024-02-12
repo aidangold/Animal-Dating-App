@@ -23,8 +23,9 @@ export default function Header() {
                     <Link to="/">OSU Adoption Center</Link>
                 </div>
                 <div className="header-nav">
-                    <button>Sign In</button>
-                    <button>Register</button>
+                    <a href="/match">Match with Pets</a>
+                    <button>Sign Up</button>
+                    <button>Log In</button>
                 </div>
             </div>
         </nav>
