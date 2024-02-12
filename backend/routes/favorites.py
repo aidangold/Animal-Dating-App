@@ -13,9 +13,9 @@ def get_favorites_by_user_id():
     return jsonify({'error': 'A User ID (userID) in the argument is required'}), 400
 
   query = text('''
-    SELECT  Pets.pet_name, Pets.pet_weight, Pets.pet_type, Pets.pet_breed, 
-               Pets.pet_birthday, Pets.pet_disposition, Pets.pet_availability, 
-               Pets.pet_picture, Pets.added_date, Pets.pet_description
+    SELECT  Pets.pet_name, Pets.pet_weight, Pets.pet_type, Pets.pet_sex, Pets.pet_breed, 
+               Pets.pet_birthday, Pets.good_with_animals, Pets.good_with_children, Pets.must_be_leashed,
+               Pets.pet_availability, Pets.pet_picture, Pets.added_date, Pets.pet_description
     FROM favorites
     INNER JOIN Pets ON favorites.pet_id = Pets.pet_id
     WHERE favorites.user_id = :user_id
@@ -28,9 +28,12 @@ def get_favorites_by_user_id():
       'petName': row.pet_name,
       'petWeight': row.pet_weight,
       'petType': row.pet_type,
+      'petSex': row.pet_sex,
       'petBreed': row.pet_breed,
       'petBirthday': row.pet_birthday,
-      'petDisposition': row.pet_disposition,
+      'goodWithAnimals': row.good_with_animals,
+      'goodWithChildren': row.good_with_children,
+      'mustBeLeashed': row.must_be_leashed,
       'petAvailability': row.pet_availability,
       'petPicture': row.pet_picture,
       'addedData': row.added_date,
@@ -54,7 +57,6 @@ def unfavorite_pet_for_user():
   
   result = db.session.execute(query, {'user_id': requesting_user_id, 'pet_id': requesting_pet_id})
 
-  db.session.commit()
-
   if result.rowcount >= 1:
+    db.session.commit()
     return jsonify({'message': 'The pet has succesfully been unfavorited'})
