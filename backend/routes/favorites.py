@@ -13,7 +13,7 @@ def get_favorites_by_user_id():
     return jsonify({'error': 'A User ID (userID) in the argument is required'}), 400
 
   query = text('''
-    SELECT  Pets.pet_name, Pets.pet_weight, Pets.pet_type, Pets.pet_sex, Pets.pet_breed, 
+    SELECT  Pets.pet_id, Pets.pet_name, Pets.pet_weight, Pets.pet_type, Pets.pet_sex, Pets.pet_breed, 
                Pets.pet_birthday, Pets.good_with_animals, Pets.good_with_children, Pets.must_be_leashed,
                Pets.pet_availability, Pets.pet_picture, Pets.added_date, Pets.pet_description
     FROM favorites
@@ -25,6 +25,7 @@ def get_favorites_by_user_id():
 
   for row in result:
     favorite_pet_data = {
+      'petID': row.pet_id,
       'petName': row.pet_name,
       'petWeight': row.pet_weight,
       'petType': row.pet_type,
@@ -43,7 +44,30 @@ def get_favorites_by_user_id():
 
   return jsonify(favorites)
 
-@favorites_blueprint.route('/favorites/remove', methods=['POST'])    
+@favorites_blueprint.route('/favorites', methods=['POST'])
+def favorite_pet_for_user():
+  data = request.get_json()
+  requesting_user_id = data.get('userID')    
+  requesting_pet_id = data.get('petID')
+
+  if not requesting_user_id or not requesting_pet_id:
+    return jsonify({'error': 'Both user ID (userID) and pet ID (petID) are required'}), 400
+  
+  query = text('''
+    INSERT INTO favorites (user_id, pet_id)
+    VALUES (:user_id, :pet_id)
+               ''')
+  
+  try:
+    db.session.execute(query, {'user_id': requesting_user_id, 'pet_id': requesting_pet_id})
+    db.session.commit()
+    return jsonify({'message': 'The pet has been succesfully been favorited'})
+  except Exception as e:
+    db.session.rollback()
+    return jsonify({'error': f'Error favoriting pet: {str(e)}'}), 500
+  
+
+@favorites_blueprint.route('/favorites/unfavorite', methods=['POST'])    
 def unfavorite_pet_for_user():
   data = request.get_json()
   requesting_user_id = data.get('userID')
