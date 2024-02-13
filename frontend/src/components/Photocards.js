@@ -44,9 +44,9 @@ export default function Photocard() {
             <h3>{pet.petAvailability}</h3>
 
             <button className="like-button" onClick={() => toggleLike(pet.petID)}>
-                {likedPets.includes(pet.petID) ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />}
+                {likedPets.includes(pet.petID) ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />} 
             </button>
-            
+
         </div>
     ));
 
