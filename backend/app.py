@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, render_template
 from routes.favorites import favorites_blueprint
 from routes.pets import pets_blueprint
 from routes.register import register_blueprint
@@ -12,7 +12,7 @@ app.register_blueprint(login_blueprint)
 
 @app.route("/")
 def home():
-  return jsonify({'message': 'CS467 Project'})
+  return render_template('index.html')
 
 if __name__ == "__main__":
     app.run("0.0.0.0", debug=True)

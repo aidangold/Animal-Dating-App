@@ -7,6 +7,9 @@ from uploads.s3_functions import upload_to_s3
 
 pets_blueprint = Blueprint('pets', __name__)
 
+BUCKET = os.getenv('S3_BUCKET')
+REGION = os.getenv('AWS_REGION')
+
 # route to create a new pet entry in the database
 @pets_blueprint.route('/pets', methods=['POST'])
 def add_pet():
@@ -22,14 +25,14 @@ def add_pet():
             'good_with_children': request.form.get('goodWithChildren'),
             'must_be_leashed': request.form.get('mustBeLeashed'),
             'pet_availability': request.form.get('petAvailability'),
-            'pet_picture': request.files.get('petPicture').filename,
+            'pet_picture': f'uploads/{request.files.get("petPicture").filename}',
             'added_date': request.form.get('addedDate'),
             'pet_description': request.form.get('petDescription')
         }
 
         file_to_upload = request.files.get('petPicture')
         file_to_upload.save(os.path.join('uploads', secure_filename(file_to_upload.filename)))
-        upload_success = upload_to_s3(f'uploads/{file_to_upload.filename}', os.getenv('S3_BUCKET'))
+        upload_success = upload_to_s3(f'uploads/{file_to_upload.filename}', BUCKET)
 
         if not upload_success:
             return jsonify({'error': 'upload was not a success!'}), 400
@@ -57,12 +60,17 @@ def get_pets():
     try: 
         pets = []
         # SQL query to select all entries from the pets table
-        query = text("SELECT * FROM pets")
+        query = text('''
+                     SELECT *, 
+                     EXTRACT(YEAR FROM AGE(NOW(), Pets.pet_birthday)) AS pet_age
+                     FROM pets
+                     ''')
         result = db.session.execute(query)
 
         for row in result:
             pet_data = {
             'petID': row.pet_id,
+            'petAge': row.pet_age,
             'petName': row.pet_name,
             'petWeight': row.pet_weight,
             'petType': row.pet_type,
@@ -73,7 +81,7 @@ def get_pets():
             'goodWithChildren': row.good_with_children,
             'mustBeLeashed': row.must_be_leashed,
             'petAvailability': row.pet_availability,
-            'petPicture': row.pet_picture,
+            'petPicture': f'https://{BUCKET}.s3.{REGION}.amazonaws.com/{row.pet_picture}',
             'addedData': row.added_date,
             'petDescription': row.pet_description,
             }

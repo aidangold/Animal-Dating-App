@@ -1,8 +1,12 @@
+import os
 from flask import Blueprint, jsonify, request
 from sqlalchemy import text
 from db import db
 
 favorites_blueprint = Blueprint('favorites', __name__)
+
+BUCKET = os.getenv('S3_BUCKET')
+REGION = os.getenv('AWS_REGION')
 
 @favorites_blueprint.route('/favorites')
 def get_favorites_by_user_id():
@@ -37,7 +41,7 @@ def get_favorites_by_user_id():
         'goodWithChildren': row.good_with_children,
         'mustBeLeashed': row.must_be_leashed,
         'petAvailability': row.pet_availability,
-        'petPicture': row.pet_picture,
+        'petPicture': f'https://{BUCKET}.s3.{REGION}.amazonaws.com/{row.pet_picture}',
         'addedData': row.added_date,
         'petDescription': row.pet_description,
       }
