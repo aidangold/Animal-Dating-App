@@ -8,7 +8,9 @@ import MonitorWeightRoundedIcon from '@mui/icons-material/MonitorWeightRounded';
 import EventAvailableRoundedIcon from '@mui/icons-material/EventAvailableRounded';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import './photocards.css';
+import Modal from './Modal';
 
 export default function Photocard() {
     const [likedPets, setLikedPets] = useState([]);
@@ -21,37 +23,66 @@ export default function Photocard() {
         }
     };
 
+    const [modal, setModal] = useState(false);
+    const [pet, setPet] = useState(0);
+
+    const toggleModal = (id) => {
+        setPet(id);
+        setModal(!modal);
+    }
+
     const petdata = data.pets.map((pet) => (
         <div className="photocard" key={pet.petID}>
-            <img
-                src={require('../sample/photos/' + pet.petPicture + '.jpg')}
-                height={400}
-                alt={pet.name}
-            />
-            <h2>{pet.petName}</h2>
-            <ul>
-                <li><PetsRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                <li>{pet.petType}</li>
-                <li><WcRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                <li>{pet.petSex}</li>
-                <li><TodayRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                <li>{pet.petAge}</li>
-                <li><MonitorWeightRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                <li>{pet.petWeight}</li>
-                <li><EventAvailableRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                <li>{pet.addedDate}</li>
-            </ul>
-            <h3>{pet.petAvailability}</h3>
+            <div onClick={()=> {toggleModal(pet.petID);}}>
+                <img
+                    src={require('../sample/photos/' + pet.petPicture + '.jpg')}
+                    height={400}
+                    alt={pet.name}
+                />
+                <h2>{pet.petName}</h2>
+                <ul>
+                    <li><PetsRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
+                    <li>{pet.petType}</li>
+                    <li><WcRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
+                    <li>{pet.petSex}</li>
+                    <li><TodayRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
+                    <li>{pet.petAge}</li>
+                    <li><MonitorWeightRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
+                    <li>{pet.petWeight}</li>
+                    <li><EventAvailableRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
+                    <li>{pet.addedDate}</li>
+                </ul>
+                <h3>{pet.petAvailability}</h3>
+            </div>
 
             <button className="like-button" onClick={() => toggleLike(pet.petID)}>
                 {likedPets.includes(pet.petID) ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon />} 
             </button>
-
         </div>
     ));
 
     return (
-        <div className="photocards">{petdata}</div>
+        <>
+            <div className="photocards">{petdata}</div>
+
+            {modal && (
+                <div className="modal">
+                    <div onClick={toggleModal} className="overlay"></div>
+                    <div className="modal-content">
+                        <Modal pet={data.pets[pet]} />
+                        <div className="modal-btns">
+                            <button className="close-modal" onClick={toggleModal}>
+                                <CloseRoundedIcon fontSize="large" />
+                            </button>
+
+                            <button className="like-modal" onClick={() => toggleLike(pet.petID)}>
+                                {likedPets.includes(pet.petID) ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon fontSize='large'/>} 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
     );
 }
 
