@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import data from '../sample/pets.json';
-import { lightBlue } from '@mui/material/colors';
+import { lightBlue, pink, grey } from '@mui/material/colors';
 import PetsRoundedIcon from '@mui/icons-material/PetsRounded';
 import WcRoundedIcon from '@mui/icons-material/WcRounded';
 import TodayRoundedIcon from '@mui/icons-material/TodayRounded';
@@ -72,11 +72,11 @@ export default function Photocard() {
                         <Modal pet={data.pets[pet]} />
                         <div className="modal-btns">
                             <button className="close-modal" onClick={toggleModal}>
-                                <CloseRoundedIcon fontSize="large" />
+                                <CloseRoundedIcon sx={{color: grey[900], fontSize: 36 }} />
                             </button>
 
                             <button className="like-modal" onClick={() => toggleLike(pet.petID)}>
-                                {likedPets.includes(pet.petID) ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon fontSize='large'/>} 
+                                {likedPets.includes(pet.petID) ? <FavoriteIcon sx={{color: pink[500], fontSize: 36 }} /> : <FavoriteBorderIcon sx={{color: pink[500], fontSize: 36 }}/>} 
                             </button>
                         </div>
                     </div>
