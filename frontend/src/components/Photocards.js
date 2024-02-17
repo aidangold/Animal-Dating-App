@@ -82,7 +82,7 @@ export default function Photocard() {
                 <div className="modal">
                     <div onClick={toggleModal} className="overlay"></div>
                     <div className="modal-content">
-                        <Modal pet={data.pets[pet]} />
+                        <Modal pet={data[pet]} />
                         <div className="modal-btns">
                             <button className="close-modal" onClick={toggleModal}>
                                 <CloseRoundedIcon sx={{color: grey[900], fontSize: 36 }} />
