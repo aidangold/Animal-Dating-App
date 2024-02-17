@@ -1,0 +1,31 @@
+body.active-filter {
+    width: calc(100% - 280px);
+}
+
+.filter-menu {
+    width: 250px;
+    padding: 1.5vw;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.filter-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #ddd;
+    border-radius: 10px;
+    padding-left: 13px;
+}
+
+.chips {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.white-space{
+    height: 1em;
+}

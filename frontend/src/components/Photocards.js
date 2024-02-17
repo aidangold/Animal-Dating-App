@@ -31,6 +31,13 @@ export default function Photocard() {
         setModal(!modal);
     }
 
+    if (modal) {
+        document.body.classList.add('active-modal')
+    }
+    else {
+        document.body.classList.remove('active-modal')
+    }
+
     const petdata = data.pets.map((pet) => (
         <div className="photocard" key={pet.petID}>
             <div onClick={()=> {toggleModal(pet.petID);}}>
