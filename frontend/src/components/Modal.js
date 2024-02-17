@@ -5,6 +5,7 @@ import MonitorWeightRoundedIcon from '@mui/icons-material/MonitorWeightRounded';
 import EventAvailableRoundedIcon from '@mui/icons-material/EventAvailableRounded';
 import InventoryRoundedIcon from '@mui/icons-material/InventoryRounded';
 import { lightBlue } from '@mui/material/colors';
+import Divider from '@mui/material/Divider';
 
 // modal tutorial by The Web School. https://www.youtube.com/watch?v=9DwGahSqcEc
 export default function Modal({pet}) {
@@ -16,21 +17,30 @@ export default function Modal({pet}) {
                 alt={pet.name} />
 
             <h2>{pet.petName}</h2>
-                <ul>
-                    <li><PetsRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petType}</li>
-                    <li><WcRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petSex}</li>
-                    <li><TodayRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petAge}</li>
-                    <li><MonitorWeightRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petWeight}</li>
-                    <li><EventAvailableRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.addedDate}</li>
-                    <li><InventoryRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petAvailability}</li>
-                </ul>
-                <p>{pet.petDescription}</p>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Breed</th>
+                    <th>Sex</th>
+                    <th>Weight</th>
+                    <th>Age</th>
+                    <th>Aquired</th>
+                    <th>Availability</th>
+                </tr>
+                <tr>
+                    <td>{pet.petID}</td>
+                    <td>{pet.petType}</td>
+                    <td>{pet.petBreed}</td>
+                    <td>{pet.petSex}</td>
+                    <td>{pet.petWeight}</td>
+                    <td>{pet.petAge}</td>
+                    <td>{pet.addedData}</td>
+                    <td>{pet.petAvailability}</td>
+                </tr>
+            </table>
+            <h3>Description</h3>
+            <p>{pet.petDescription}</p>
         </>
     )
 }
