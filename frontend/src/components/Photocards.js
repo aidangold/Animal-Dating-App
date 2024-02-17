@@ -12,6 +12,12 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import './photocards.css';
 import Modal from './Modal';
 
+const filterAvailable = (pets) => {
+    return pets.petAvailability === "Available";
+}
+
+const availablePets = data.filter(filterAvailable);
+
 export default function Photocard() {
     const [likedPets, setLikedPets] = useState([]);
 
@@ -38,7 +44,7 @@ export default function Photocard() {
         document.body.classList.remove('active-modal')
     }
 
-    const petdata = data.pets.map((pet) => (
+    const petdata = availablePets.map((pet) => (
         <div className="photocard" key={pet.petID}>
             <div onClick={()=> {toggleModal(pet.petID);}}>
                 <img
