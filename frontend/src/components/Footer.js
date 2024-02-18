@@ -5,7 +5,8 @@ export default function Footer() {
         <footer>
             <div className="app-footer">
                 <div className="credits">
-                    Icon designed by Freepik / Images from Unplash
+                    Icon designed by <a href="https://www.freepik.com/" target="_blank">Freepik</a>&nbsp;
+                    /&nbsp;&nbsp;Images from <a href="https://unsplash.com/" target="_blank">Unplash</a>
                 </div>
                 <div className="copyright">
                     © 2024 Goldstein, Hsiung, Huang, & Quach, All Rights Reserved.
