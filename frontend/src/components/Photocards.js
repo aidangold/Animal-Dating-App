@@ -12,13 +12,15 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import './photocards.css';
 import Modal from './Modal';
 
+// Function to return true if pet's Availability is "Available"
 const filterAvailable = (pets) => {
     return pets.petAvailability === "Available";
 }
 
-const availablePets = data.filter(filterAvailable);
-
 export default function Photocard() {
+    // array of pets (objects) that are "Available" for display on page
+    const availablePets = data.filter(filterAvailable);
+
     const [likedPets, setLikedPets] = useState([]);
 
     const toggleLike = (petID) => {
@@ -37,6 +39,7 @@ export default function Photocard() {
         setModal(!modal);
     }
 
+    // Prevents scrolling in main content when modal is open
     if (modal) {
         document.body.classList.add('active-modal')
     }
@@ -44,6 +47,7 @@ export default function Photocard() {
         document.body.classList.remove('active-modal')
     }
 
+    // map each individual pet to photocard
     const petdata = availablePets.map((pet) => (
         <div className="photocard" key={pet.petID}>
             <div onClick={()=> {toggleModal(pet.petID);}}>
