@@ -1,0 +1,102 @@
+.login-page input {
+    width: calc(100% - 30px);
+    padding: 10px;
+    margin-bottom: 20px;
+    margin-right: 30px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: block;
+}
+
+.login-page form {
+    padding: 20px;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 500px;
+}
+
+.login-page .form-group {
+    overflow: hidden;
+}
+
+.login-page h2 {
+    font-family: 'League Gothic', sans-serif;
+    font-size: 2.5rem;
+    color: #5086A5;
+    margin-bottom: 20px;
+}
+
+.login-page button {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: white;
+    background-color: #E35D7B;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 300px;
+    display: block;
+    margin: 0 auto;
+}
+
+.login-page button:hover {
+    background-color: #c04d67;
+}
+
+.login-page .forgot-options button {
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 10px;
+    color: #5086A5;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.login-page .forgot-options {
+    overflow: hidden;
+}
+
+.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.login-page form {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+}
+
+.login-page h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-page .forgot-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.login-page .forgot-options button {
+    width: auto;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
