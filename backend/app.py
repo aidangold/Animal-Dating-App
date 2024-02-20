@@ -1,10 +1,13 @@
 from flask import Flask, render_template
+from flask_cors import CORS
 from routes.favorites import favorites_blueprint
 from routes.pets import pets_blueprint
 from routes.register import register_blueprint
 from routes.login import auth_blueprint
 from db import db, app
 from mail import mail
+
+CORS(app)
 
 app.register_blueprint(favorites_blueprint)
 app.register_blueprint(pets_blueprint)
