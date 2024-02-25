@@ -14,6 +14,7 @@ export default function Matchfilter() {
     const handleClick = () => {
     }
 
+    // Resizes body of content when filter menu is open
     if (isOpen) {
         document.body.classList.add('active-filter')
     }
