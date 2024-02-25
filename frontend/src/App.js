@@ -5,6 +5,9 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import SignupPage from "./pages/SignUp";
 import LogInPage from './pages/LogIn';
+import ForgotPasswordPage from './pages/ForgotPassword';
+import ResetPasswordPage from './pages/ResetPassword';
+import RetrieveUsernamePage from './pages/RetrieveUsername';
 
 function App() {
   return (
@@ -20,6 +23,9 @@ function App() {
             <Route path='/match' element={<Matching />} />
             <Route path='/signup' element={<SignupPage />} />
             <Route path='/login' element={<LogInPage />} />
+            <Route path='/forgot-password' element={<ForgotPasswordPage />} />
+            <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
+            <Route path='/retrieve-username' element={<RetrieveUsernamePage />} />
           </Routes>
 
           <div id="footer">

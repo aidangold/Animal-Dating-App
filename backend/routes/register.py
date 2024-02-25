@@ -6,7 +6,7 @@ from db import db
 register_blueprint = Blueprint('register', __name__)
 
 # the endpoint for user registration
-@register_blueprint.route('/register', methods=['POST'])
+@register_blueprint.route('/signup', methods=['POST'])
 def register():
     try:
         # parses the JSON data sent in the request body
@@ -22,11 +22,18 @@ def register():
         userRole = data.get('userRole', 'user')  # default to user role
 
         # check if a user with the provided userName already exists in the database
-        query = text("SELECT user_name FROM users WHERE user_name = :userName")
+        userName_query = text("SELECT user_name FROM users WHERE user_name = :userName")
 
         # executes the search query
-        if db.session.execute(query, {'userName': userName}).fetchone():
+        if db.session.execute(userName_query, {'userName': userName}).fetchone():
             return jsonify({'error': 'Username already exists'}), 409
+        
+        # check if a user with the provided userEmail already exists in the database
+        userEmail_query = text("SELECT user_email FROM users WHERE user_email = :userEmail")
+
+        # executes the search query
+        if db.session.execute(userEmail_query, {'userEmail': userEmail}).fetchone():
+            return jsonify({'error': 'Useremail already exists'}), 409
 
         # generates a hash for the provided password
         hashed_password = generate_password_hash(password)
