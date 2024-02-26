@@ -15,10 +15,30 @@ function LogInPage() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // future add the code for logic details when ready
-        console.log(formData);
+        // try statement to avoid crashing
+        try {
+            const response = await fetch('http://localhost:5000/login', { // update later when deployed
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userName: formData.username,
+                    password: formData.password
+                })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                console.log(data.message); // happy login
+            } else {
+                console.log(data.error);
+            }
+        } catch (error) {
+            console.error('Error', error);
+        }
+
     };
 
     return (

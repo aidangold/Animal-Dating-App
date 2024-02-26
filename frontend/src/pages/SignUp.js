@@ -6,7 +6,11 @@ function SignupPage() {
         username: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
+        contactAddress: ''
     });
 
     const handleChange = (e) => {
@@ -28,9 +32,14 @@ function SignupPage() {
     
         // Prepare the data to be sent to the backend
         const userData = {
-            username: formData.username,
+            userName: formData.username,
             password: formData.password,
             userEmail: formData.email,
+            userFirstName: formData.firstName,
+            userLastName: formData.lastName,
+            userPhoneNo: formData.phoneNumber,
+            contactAddress: formData.contactAddress,
+            userRole: "user"
         };
     
         // POST request to the backend
@@ -48,7 +57,6 @@ function SignupPage() {
             console.log('Redirecting to login page...');
             window.location.href = 'http://localhost:3000/login';
         })
-        
         .catch((error) => {
             console.error('Error:', error);
         });
@@ -74,6 +82,22 @@ function SignupPage() {
                 <div className="form-group">
                     <label htmlFor="confirmPassword">Confirm Password</label>
                     <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="phoneNumber">Phone Number</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="contactAddress">Contact Address</label>
+                    <input type="text" id="contactAddress" name="contactAddress" value={formData.contactAddress} onChange={handleChange} required />
                 </div>
                 <button type="submit">Sign Up</button>
             </form>
