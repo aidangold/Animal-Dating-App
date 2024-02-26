@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import data from '../sample/pets.json';
+import React, { useState, useEffect } from 'react';
 import { lightBlue, pink, grey } from '@mui/material/colors';
 import PetsRoundedIcon from '@mui/icons-material/PetsRounded';
 import WcRoundedIcon from '@mui/icons-material/WcRounded';
@@ -18,8 +17,25 @@ const filterAvailable = (pets) => {
 }
 
 export default function Photocard() {
+    // fetch and store full pet data
+    const [fullPetData, setFullPetData] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:5000/pets')
+        .then((res) => {
+            return res.json();
+        })
+        .then((data) => {
+            console.log(data);
+            setFullPetData(data);
+        });
+    }, []);
+
     // array of pets (objects) that are "Available" for display on page
-    const availablePets = data.filter(filterAvailable);
+    const availablePets = fullPetData.filter(filterAvailable);
+
+    const retrievePet = (id) => {
+        availablePets.findIndex((pet) => pet.petID === id);
+    }
 
     const [likedPets, setLikedPets] = useState([]);
 
@@ -52,7 +68,7 @@ export default function Photocard() {
         <div className="photocard" key={pet.petID}>
             <div onClick={()=> {toggleModal(pet.petID);}}>
                 <img
-                    src={require('../sample/photos/' + pet.petPicture + '.jpg')}
+                    src={pet.petPicture}
                     height={400}
                     alt={pet.name}
                 />
@@ -86,7 +102,7 @@ export default function Photocard() {
                 <div className="modal">
                     <div onClick={toggleModal} className="overlay"></div>
                     <div className="modal-content">
-                        <Modal pet={data[pet]} />
+                        <Modal pet={availablePets.find(p => p.petID === pet)} />
                         <div className="modal-btns">
                             <button className="close-modal" onClick={toggleModal}>
                                 <CloseRoundedIcon sx={{color: grey[900], fontSize: 36 }} />
