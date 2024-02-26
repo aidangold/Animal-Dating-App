@@ -1,5 +1,8 @@
+import { format, parseJSON } from "date-fns";
+
 // modal tutorial by The Web School. https://www.youtube.com/watch?v=9DwGahSqcEc
 export default function Modal({pet}) {
+    const formattedDate = format(pet.addedData, 'MMM do, yyyy')
 
     return (
         <>
@@ -27,7 +30,7 @@ export default function Modal({pet}) {
                         <td>{pet.petSex}</td>
                         <td>{pet.petWeight}</td>
                         <td>{pet.petAge}</td>
-                        <td>{pet.addedData}</td>
+                        <td>{formattedDate}</td>
                         <td>{pet.petAvailability}</td>
                     </tr>
                 </tbody>
