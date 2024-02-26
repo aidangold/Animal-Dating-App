@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { format } from "date-fns";
 import { lightBlue, pink, grey } from '@mui/material/colors';
 import PetsRoundedIcon from '@mui/icons-material/PetsRounded';
 import WcRoundedIcon from '@mui/icons-material/WcRounded';
@@ -27,15 +28,15 @@ export default function Photocard() {
         .then((data) => {
             console.log(data);
             setFullPetData(data);
+        })
+        .catch(function(error) {
+            console.log('Request failed', error);
+            window.location.reload(false);
         });
     }, []);
 
     // array of pets (objects) that are "Available" for display on page
     const availablePets = fullPetData.filter(filterAvailable);
-
-    const retrievePet = (id) => {
-        availablePets.findIndex((pet) => pet.petID === id);
-    }
 
     const [likedPets, setLikedPets] = useState([]);
 
@@ -47,6 +48,7 @@ export default function Photocard() {
         }
     };
 
+    // modal states
     const [modal, setModal] = useState(false);
     const [pet, setPet] = useState(0);
 
@@ -79,11 +81,11 @@ export default function Photocard() {
                     <li><WcRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
                     <li>{pet.petSex}</li>
                     <li><TodayRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petAge}</li>
+                    <li>{pet.petAge} yrs</li>
                     <li><MonitorWeightRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petWeight}</li>
+                    <li>{pet.petWeight} lbs</li>
                     <li><EventAvailableRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.addedDate}</li>
+                    <li>{format(pet.addedData, 'MM/dd/yy')}</li>
                 </ul>
                 <h3>{pet.petAvailability}</h3>
             </div>

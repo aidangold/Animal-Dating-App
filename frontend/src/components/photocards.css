@@ -163,3 +163,10 @@ body.active-modal {
         background: none;
     }
 }
+
+.modal-chips{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 0 60px;
+}
