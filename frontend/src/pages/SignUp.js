@@ -19,9 +19,41 @@ function SignupPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // future code for signup functionality logic and stuff here
-        console.log(formData);
+        
+        // Check if passwords match
+        if (formData.password !== formData.confirmPassword) {
+            alert("Passwords do not match.");
+            return;
+        }
+    
+        // Prepare the data to be sent to the backend
+        const userData = {
+            username: formData.username,
+            password: formData.password,
+            userEmail: formData.email,
+        };
+    
+        // POST request to the backend
+        fetch('http://localhost:5000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // Redirect to login page
+            console.log('Redirecting to login page...');
+            window.location.href = 'http://localhost:3000/login';
+        })
+        
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     };
+    
 
     return (
         <div className="signup-page">
