@@ -4,6 +4,7 @@ from routes.favorites import favorites_blueprint
 from routes.pets import pets_blueprint
 from routes.register import register_blueprint
 from routes.login import auth_blueprint
+from routes.adoption_requests import adoption_requests_blueprint
 from db import db, app
 from mail import mail
 
@@ -13,6 +14,7 @@ app.register_blueprint(favorites_blueprint)
 app.register_blueprint(pets_blueprint)
 app.register_blueprint(register_blueprint)
 app.register_blueprint(auth_blueprint)
+app.register_blueprint(adoption_requests_blueprint)
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587

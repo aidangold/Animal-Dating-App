@@ -49,7 +49,7 @@ def get_favorites_by_user_id():
 
     return jsonify(favorites)
   except Exception as e:
-    return jsonify({'error': f'Error favoriting pet: {str(e)}'}), 500
+    return jsonify({'error': f'Error retrieving all favorited pet: {str(e)}'}), 500
 
 @favorites_blueprint.route('/favorites', methods=['POST'])
 def favorite_pet_for_user():
@@ -101,4 +101,4 @@ def unfavorite_pet_for_user():
       return jsonify({'message': 'The pet has succesfully been unfavorited'})
   except Exception as e:
     db.session.rollback()
-    return jsonify({'error': f'Error favoriting pet: {str(e)}'}), 500
+    return jsonify({'error': f'Error unfavoriting pet: {str(e)}'}), 500
