@@ -100,6 +100,29 @@ def get_adoption_requests():
   except Exception as e:
     return jsonify({'error': f'Error retrieving adoption request data for user: {str(e)}'}), 500
 
+@adoption_requests_blueprint.route('/adoption_requests', methods=['POST'])
+def create_adoption_request():
+  try:
+    data = request.get_json()
+    requesting_user_id = data.get('userID')    
+    requesting_pet_id = data.get('petID')
+    
+    if not requesting_user_id or not requesting_pet_id:
+      return jsonify({'error': 'Both user ID (userID) and pet ID (petID) are required'}), 400
+    
+    query = text('''
+      INSERT INTO adoption_requests (user_id, pet_id)
+      VALUES (:user_id, :pet_id)
+                ''')
+    
+    db.session.execute(query, ({'user_id': requesting_user_id, 'pet_id': requesting_pet_id}))
+    db.session.commit()
+
+    return jsonify({'message': 'An adoption request has been created'})
+
+  except Exception as e:
+    db.session.rollback()
+    return jsonify({'error': f'Error creating an adoption request: {str(e)}'}), 500
 
 
 
