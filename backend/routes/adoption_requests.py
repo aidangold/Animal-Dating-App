@@ -18,11 +18,16 @@ def get_adoption_requests_by_user_id():
       return jsonify({'error': 'A User ID (userID) in the argument is required'}), 400
 
     query = text('''
-      SELECT pets.*,
-      EXTRACT(YEAR FROM AGE(NOW(), pets.pet_birthday)) AS pet_age
-      FROM adoption_requests
-      INNER JOIN pets on adoption_requests.pet_id = pets.pet_id
-      WHERE adoption_requests.user_id = :user_id           
+      SELECT 
+        pets.*,
+        EXTRACT(YEAR FROM AGE(NOW(), pets.pet_birthday)) AS pet_age_in_years,
+        EXTRACT(MONTH FROM AGE(NOW(), pets.pet_birthday)) AS pet_age_in_months
+      FROM 
+        adoption_requests
+      INNER JOIN 
+        pets on adoption_requests.pet_id = pets.pet_id
+      WHERE 
+        adoption_requests.user_id = :user_id           
                  ''')
     
     result = db.session.execute(query, {'user_id': requesting_user_id})
@@ -31,7 +36,8 @@ def get_adoption_requests_by_user_id():
       pet_data = {
         'petID': row.pet_id,
         'petName': row.pet_name,
-        'petAge': row.pet_age,
+        'petAgeInYears': row.pet_age_in_years,
+        'petAgeInMonths': row.pet_age_in_months,
         'petWeight': row.pet_weight,
         'petType': row.pet_type,
         'petSex': row.pet_sex,
@@ -59,7 +65,9 @@ def get_adoption_requests():
     query = text('''
       SELECT 
         pets.*,
-        EXTRACT(YEAR FROM AGE(NOW(), pets.pet_birthday)) AS pet_age,
+        EXTRACT(YEAR FROM AGE(NOW(), pets.pet_birthday)) AS pet_age_in_years,
+        EXTRACT(MONTH FROM AGE(NOW(), pets.pet_birthday)) AS pet_age_in_months,
+        users.user_id,
         users.user_first_name,
         users.user_last_name,
         users.user_email
@@ -77,7 +85,8 @@ def get_adoption_requests():
       pet_data = {
         'petID': row.pet_id,
         'petName': row.pet_name,
-        'petAge': row.pet_age,
+        'petAgeInYears': row.pet_age_in_years,
+        'petAgeInMonths': row.pet_age_in_months,
         'petWeight': row.pet_weight,
         'petType': row.pet_type,
         'petSex': row.pet_sex,
@@ -90,6 +99,7 @@ def get_adoption_requests():
         'petPicture': f'https://{BUCKET}.s3.{REGION}.amazonaws.com/{row.pet_picture}',
         'addedData': row.added_date,
         'petDescription': row.pet_description,
+        'userID': row.user_id,
         'userFirstName': row.user_first_name,
         'userLastName': row.user_last_name,
         'userEmail': row.user_email

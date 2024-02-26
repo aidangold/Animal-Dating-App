@@ -19,7 +19,8 @@ def get_favorites_by_user_id():
 
     query = text('''
       SELECT Pets.*, 
-      EXTRACT(YEAR FROM AGE(NOW(), Pets.pet_birthday)) AS pet_age
+      EXTRACT(YEAR FROM AGE(NOW(), Pets.pet_birthday)) AS pet_age_in_years,
+      EXTRACT(MONTH FROM AGE(NOW(), Pets.pet_birthday)) AS pet_age_in_months
       FROM favorites
       INNER JOIN Pets ON favorites.pet_id = Pets.pet_id
       WHERE favorites.user_id = :user_id
@@ -31,7 +32,8 @@ def get_favorites_by_user_id():
       favorite_pet_data = {
         'petID': row.pet_id,
         'petName': row.pet_name,
-        'petAge': row.pet_age,
+        'petAgeInYears': row.pet_age_in_years,
+        'petAgeInMonths': row.pet_age_in_months,
         'petWeight': row.pet_weight,
         'petType': row.pet_type,
         'petSex': row.pet_sex,

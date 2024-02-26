@@ -62,7 +62,8 @@ def get_pets():
         # SQL query to select all entries from the pets table
         query = text('''
                      SELECT *, 
-                     EXTRACT(YEAR FROM AGE(NOW(), Pets.pet_birthday)) AS pet_age
+                     EXTRACT(YEAR FROM AGE(NOW(), Pets.pet_birthday)) AS pet_age_in_years,
+                     EXTRACT(MONTH FROM AGE(NOW(), Pets.pet_birthday)) AS pet_age_in_months
                      FROM pets
                      ''')
         result = db.session.execute(query)
@@ -70,7 +71,8 @@ def get_pets():
         for row in result:
             pet_data = {
             'petID': row.pet_id,
-            'petAge': row.pet_age,
+            'petAgeInYears': row.pet_age_in_years,
+            'petAgeInMonths': row.pet_age_in_months,
             'petName': row.pet_name,
             'petWeight': row.pet_weight,
             'petType': row.pet_type,
