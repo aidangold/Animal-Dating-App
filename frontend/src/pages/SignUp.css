@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Calistoga&family=League+Gothic&family=Poppins&display=swap');
+
+.signup-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+.signup-page form {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: white;
+    border-radius: 8px;
+}
+
+.signup-page h2 {
+    font-family: 'League Gothic', sans-serif;
+    font-size: 2.5rem;
+    color: #5086A5;
+    margin-bottom: 20px;
+}
+
+.signup-page input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.signup-page button {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: white;
+    background-color: #E35D7B;
+    border: none;
+    padding: 15px 30px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.signup-page button:hover {
+    background-color: #c04d67;
+}
+
+.signup-page .form-group {
+    margin-bottom: 1rem;
+}
+
+
+
