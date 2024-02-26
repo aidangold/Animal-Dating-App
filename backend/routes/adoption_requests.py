@@ -124,6 +124,33 @@ def create_adoption_request():
     db.session.rollback()
     return jsonify({'error': f'Error creating an adoption request: {str(e)}'}), 500
 
+@adoption_requests_blueprint.route('/adoption_requests', methods=['DELETE'])
+def delete_adoption_request():
+  try:
+    data = request.get_json()
 
+    requesting_user_id = data.get('userID')
+    requesting_pet_id = data.get('petID')
 
+    if not requesting_user_id or not requesting_pet_id:
+      return jsonify({'error': 'Both user ID (userID) and pet ID (petID) are required'}), 400
+
+    query = text('''
+      DELETE FROM adoption_requests
+      WHERE user_id = :user_id
+      AND pet_id = :pet_id
+                ''')
+    
+    result = db.session.execute(query, {'user_id': requesting_user_id, 'pet_id': requesting_pet_id})
+    
+    if result.rowcount == 0:
+      return jsonify({'error': 'There was no match with the provided userID and petID to delete an adoption request'}), 400
+
+    if result.rowcount >= 1:
+      db.session.commit()
+      return jsonify({'message': 'The adoption request has succesfully been deleted'})
+    
+  except Exception as e:    
+    db.session.rollback()
+    return jsonify({'error': f'Error unfavoriting pet: {str(e)}'}), 500
 
