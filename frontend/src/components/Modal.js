@@ -1,36 +1,60 @@
-import PetsRoundedIcon from '@mui/icons-material/PetsRounded';
-import WcRoundedIcon from '@mui/icons-material/WcRounded';
-import TodayRoundedIcon from '@mui/icons-material/TodayRounded';
-import MonitorWeightRoundedIcon from '@mui/icons-material/MonitorWeightRounded';
-import EventAvailableRoundedIcon from '@mui/icons-material/EventAvailableRounded';
-import InventoryRoundedIcon from '@mui/icons-material/InventoryRounded';
-import { lightBlue } from '@mui/material/colors';
+import { format } from "date-fns";
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import { pink, lightBlue } from '@mui/material/colors';
+import Chip from '@mui/material/Chip';
 
 // modal tutorial by The Web School. https://www.youtube.com/watch?v=9DwGahSqcEc
 export default function Modal({pet}) {
+    const theme = createTheme({
+        palette: {
+          primary: {
+            main: pink[300],
+        },
+          secondary: {
+            main: lightBlue[300],
+        }
+      }});
+
+    const formattedDate = format(pet.addedData, 'MMM do, yyyy')
 
     return (
-        <>
+        <ThemeProvider theme={theme}>
             <img
-                src={require('../sample/photos/' + pet.petPicture + '.jpg')}
+                src={pet.petPicture}
                 alt={pet.name} />
 
             <h2>{pet.petName}</h2>
-                <ul>
-                    <li><PetsRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petType}</li>
-                    <li><WcRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petSex}</li>
-                    <li><TodayRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petAge}</li>
-                    <li><MonitorWeightRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petWeight}</li>
-                    <li><EventAvailableRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.addedDate}</li>
-                    <li><InventoryRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petAvailability}</li>
-                </ul>
-                <p>{pet.petDescription}</p>
-        </>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Breed</th>
+                        <th>Sex</th>
+                        <th>Weight</th>
+                        <th>Age</th>
+                        <th>Aquired</th>
+                        <th>Availability</th>
+                    </tr>
+                    <tr>
+                        <td>{pet.petID}</td>
+                        <td>{pet.petType}</td>
+                        <td>{pet.petBreed}</td>
+                        <td>{pet.petSex}</td>
+                        <td>{pet.petWeight} lbs</td>
+                        <td>{pet.petAge} yrs</td>
+                        <td>{formattedDate}</td>
+                        <td>{pet.petAvailability}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div className="modal-chips">
+                {pet.goodWithAnimals ? <Chip label='Good With Animals' color="primary" /> : <Chip label='Good With Animals' variant='outlined' />}
+                {pet.goodWithChildren ? <Chip label='Good With Children' color="primary" /> : <Chip label='Good With Children' variant='outlined' />}
+                {pet.mustBeLeashed ? <Chip label='Must Be Leashed' color="primary" /> : <Chip label='Must Be Leashed' variant='outlined' />}
+            </div>
+            <h3>Description</h3>
+            <p>{pet.petDescription}</p>
+        </ThemeProvider>
     )
 }
