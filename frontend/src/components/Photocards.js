@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import data from '../sample/pets.json';
+import React, { useState, useEffect } from 'react';
+import { format } from "date-fns";
 import { lightBlue, pink, grey } from '@mui/material/colors';
 import PetsRoundedIcon from '@mui/icons-material/PetsRounded';
 import WcRoundedIcon from '@mui/icons-material/WcRounded';
@@ -18,8 +18,25 @@ const filterAvailable = (pets) => {
 }
 
 export default function Photocard() {
+    // fetch and store full pet data
+    const [fullPetData, setFullPetData] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:5000/pets')
+        .then((res) => {
+            return res.json();
+        })
+        .then((data) => {
+            console.log(data);
+            setFullPetData(data);
+        })
+        .catch(function(error) {
+            console.log('Request failed', error);
+            window.location.reload(false);
+        });
+    }, []);
+
     // array of pets (objects) that are "Available" for display on page
-    const availablePets = data.filter(filterAvailable);
+    const availablePets = fullPetData.filter(filterAvailable);
 
     const [likedPets, setLikedPets] = useState([]);
 
@@ -31,6 +48,7 @@ export default function Photocard() {
         }
     };
 
+    // modal states
     const [modal, setModal] = useState(false);
     const [pet, setPet] = useState(0);
 
@@ -52,7 +70,7 @@ export default function Photocard() {
         <div className="photocard" key={pet.petID}>
             <div onClick={()=> {toggleModal(pet.petID);}}>
                 <img
-                    src={require('../sample/photos/' + pet.petPicture + '.jpg')}
+                    src={pet.petPicture}
                     height={400}
                     alt={pet.name}
                 />
@@ -63,11 +81,11 @@ export default function Photocard() {
                     <li><WcRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
                     <li>{pet.petSex}</li>
                     <li><TodayRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petAge}</li>
+                    <li>{pet.petAge} yrs</li>
                     <li><MonitorWeightRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petWeight}</li>
+                    <li>{pet.petWeight} lbs</li>
                     <li><EventAvailableRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.addedDate}</li>
+                    <li>{format(pet.addedData, 'MM/dd/yy')}</li>
                 </ul>
                 <h3>{pet.petAvailability}</h3>
             </div>
@@ -86,7 +104,7 @@ export default function Photocard() {
                 <div className="modal">
                     <div onClick={toggleModal} className="overlay"></div>
                     <div className="modal-content">
-                        <Modal pet={data[pet]} />
+                        <Modal pet={availablePets.find(p => p.petID === pet)} />
                         <div className="modal-btns">
                             <button className="close-modal" onClick={toggleModal}>
                                 <CloseRoundedIcon sx={{color: grey[900], fontSize: 36 }} />
