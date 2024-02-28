@@ -19,6 +19,10 @@ body.active-filter {
     padding-left: 13px;
 }
 
+.reset-btn{
+    text-align: right;
+}
+
 .chips {
     display: flex;
     flex-direction: row;

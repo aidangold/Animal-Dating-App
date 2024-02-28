@@ -52,7 +52,7 @@ export function filterPets(availablePets, isFilter) {
                     max2 = 10
                 }
                 else {
-                    max2 = 10
+                    max1 = 10
                 }
             }
         }
@@ -72,12 +72,73 @@ export function filterPets(availablePets, isFilter) {
         if (min1 >= 0 && min2 >= 0) {
             filteredPets = filteredPets.filter((pet) => (
                 min1 <= pet.petAgeInYears && pet.petAgeInYears < max1
-                && min2 < pet.petAgeInYears && pet.petAgeInYears < max2
+                || min2 < pet.petAgeInYears && pet.petAgeInYears < max2
                 ))
         }
         else {
             filteredPets = filteredPets.filter((pet) => (
                 min1 <= pet.petAgeInYears && pet.petAgeInYears < max1
+            ))
+        }
+    }
+
+    //filter weight
+    if (isFilter[3].length > 0 && isFilter[3].length < 4) {
+        let min1 = -1
+        let max1 = 250
+        let min2 = -1
+        let max2 = 250
+        if (isFilter[3].includes('w010')) {
+            min1 = 0
+            max1 = 10
+        }
+        if (isFilter[3].includes('w1025')) {
+            if (min1 < 0) {
+                min1 = 10
+                max1 = 25
+            }
+            if (max1 < 10) {
+                max1 = 25
+            }
+        }
+        if (isFilter[3].includes('w2550')) {
+            if (min1 < 0) {
+                min1 = 25
+                max1 = 50
+            }
+            if (max1 < 25) {
+                // if user selected 0-10 but did not select 10-25
+                if (max1 === 10) {
+                    min2 = 25
+                    max2 = 50
+                }
+                else {
+                    max1 = 50
+                }
+            }
+        }
+        if (isFilter[3].includes('w50p')) {
+            if (min1 < 0) {
+                min1 = 50
+            }
+            if (max1 < 11) {
+                // if user did not select 25-50
+                if (max1 !== 50) {
+                    min2 = 50
+                }
+            }
+        }
+
+        // filter weights with given min(s) and max(s)
+        if (min1 >= 0 && min2 >= 0) {
+            filteredPets = filteredPets.filter((pet) => (
+                min1 <= pet.petWeight && pet.petWeight < max1
+                || min2 < pet.petWeight && pet.petWeight < max2
+                ))
+        }
+        else {
+            filteredPets = filteredPets.filter((pet) => (
+                min1 <= pet.petWeight && pet.petWeight < max1
             ))
         }
     }

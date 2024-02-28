@@ -5,6 +5,7 @@ import Drawer from '@mui/material/Drawer';
 import Chip from '@mui/material/Chip';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
 import { useState } from "react";
 import './matchfilter.css';
 
@@ -45,6 +46,14 @@ export default function Matchfilter({ isFilter, filterClick }) {
                                 onClick={() => setIsOpen(false)}>
                                     <CloseRoundedIcon />
                             </IconButton>
+                        </div>
+                        <div className="reset-btn">
+                            <Button
+                                onClick={() => filterClick(-1, 'any')}
+                                variant="text"
+                                startIcon={<CachedRoundedIcon/>}>
+                                    Reset Filter
+                            </Button>
                         </div>
 
                         <h4>Pet Types</h4>
@@ -96,7 +105,7 @@ export default function Matchfilter({ isFilter, filterClick }) {
                             { isFilter[3].includes('w1025') ? <Chip label='10-25 lbs' onClick={() => filterClick(3, 'w1025')} variant='filled' /> :
                                 <Chip label='10-25 lbs' onClick={() => filterClick(3, 'w1025')} variant='outlined' /> }
                             { isFilter[3].includes('w2550') ? <Chip label='25-50 lbs' onClick={() => filterClick(3, 'w2550')} variant='filled' /> :
-                                <Chip label='2550 lbs' onClick={() => filterClick(3, 'w2550')} variant='outlined' /> }
+                                <Chip label='25-50 lbs' onClick={() => filterClick(3, 'w2550')} variant='outlined' /> }
                             { isFilter[3].includes('w50p') ? <Chip label='50+ lbs' onClick={() => filterClick(3, 'w50p')} variant='filled' /> :
                                 <Chip label='50+ lbs' onClick={() => filterClick(3, 'w50p')} variant='outlined' /> }
                         </div>

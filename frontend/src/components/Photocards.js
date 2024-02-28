@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { format } from "date-fns";
-import { lightBlue } from '@mui/material/colors';
+import { lightBlue, pink } from '@mui/material/colors';
 import PetsRoundedIcon from '@mui/icons-material/PetsRounded';
 import WcRoundedIcon from '@mui/icons-material/WcRounded';
 import TodayRoundedIcon from '@mui/icons-material/TodayRounded';
@@ -68,6 +67,14 @@ export default function Photocard({ petsData }) {
             </button>
         </div>
     ));
+
+    if (petdata.length == 0) {
+        return (
+            <div className="no-pets">
+                <p>There are no pets to display under the selected filters.</p>
+            </div>
+        )
+    }
 
     return (
         <>

@@ -15,15 +15,19 @@ export default function Matching() {
     useEffect(() => {
         fetch('http://localhost:5000/pets')
         .then((res) => {
+            if (!res.ok) {
+                return Promise.reject(res);  // reject errors
+            }
             return res.json();
         })
         .then((data) => {
-            console.log(data);
             setFullPetData(data);
         })
-        .catch(function(error) {
-            console.log('Request failed', error);
-            window.location.reload(false);
+        .catch((res) => {       // snippet from https://stackoverflow.com/a/67660773
+            console.log(res.status, res.statusText);
+            res.json().then((json) => {
+                console.log(json);
+            })
         });
     }, []);
 
@@ -38,12 +42,23 @@ export default function Matching() {
     });
 
     function filterClick(index, selected) {
-        if (selected === 'any') {
+        // reset filter
+        if (index === -1) {
+            setIsFilter({
+                0: [],    // type
+                1: [],    // sex
+                2: [],    // age
+                3: []     // weight 
+            });
+        }
+        // reset category
+        else if (selected === 'any') {
             // if any is selected, chip is displayed active if less than max num of states
             if (isFilter[index].length > 0) {
                 setIsFilter({...isFilter, [index]: []});
             }
         }
+        
         else {
             // add selected to states
             if (!isFilter[index].includes(selected)) {
