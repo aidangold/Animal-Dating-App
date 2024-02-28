@@ -5,7 +5,6 @@ import PetsRoundedIcon from '@mui/icons-material/PetsRounded';
 import WcRoundedIcon from '@mui/icons-material/WcRounded';
 import TodayRoundedIcon from '@mui/icons-material/TodayRounded';
 import MonitorWeightRoundedIcon from '@mui/icons-material/MonitorWeightRounded';
-import EventAvailableRoundedIcon from '@mui/icons-material/EventAvailableRounded';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import './photocards.css';
@@ -57,11 +56,9 @@ export default function Photocard({ petsData }) {
                     <li><WcRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
                     <li>{pet.petSex}</li>
                     <li><TodayRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petAgeInYears} yrs</li>
+                    <li>{pet.petAgeInYears} yrs {pet.petAgeInMonths} mos</li>
                     <li><MonitorWeightRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
                     <li>{pet.petWeight} lbs</li>
-                    <li><EventAvailableRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{format(pet.addedData, 'MM/dd/yy')}</li>
                 </ul>
                 <h3>{pet.petAvailability}</h3>
             </div>

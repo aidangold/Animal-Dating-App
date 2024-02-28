@@ -134,7 +134,7 @@ body.active-modal {
         margin-right: auto;
         padding-bottom: 15px;
         border-spacing: 0;
-        table-layout: fixed;
+        font-size: 14px;
 
         th {
             border-bottom: 2px solid #ccc;
