@@ -12,7 +12,7 @@ import './photocards.css';
 import Modal from './Modal';
 
 
-export default function Photocard({ availablePets }) {
+export default function Photocard({ petsData }) {
     // like pets functionality
     const [likedPets, setLikedPets] = useState([]);
 
@@ -42,7 +42,7 @@ export default function Photocard({ availablePets }) {
     }
 
     // map each individual pet to photocard
-    const petdata = availablePets.map((pet) => (
+    const petdata = petsData.map((pet) => (
         <div className="photocard" key={pet.petID}>
             <div onClick={()=> {toggleModal(pet.petID);}}>
                 <img
@@ -57,7 +57,7 @@ export default function Photocard({ availablePets }) {
                     <li><WcRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
                     <li>{pet.petSex}</li>
                     <li><TodayRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
-                    <li>{pet.petAge} yrs</li>
+                    <li>{pet.petAgeInYears} yrs</li>
                     <li><MonitorWeightRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
                     <li>{pet.petWeight} lbs</li>
                     <li><EventAvailableRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
@@ -84,7 +84,7 @@ export default function Photocard({ availablePets }) {
                             likedPets={likedPets}
                             toggleLike={toggleLike}
                             toggleModal={toggleModal}
-                            pet={availablePets.find(p => p.petID === pet)} />
+                            pet={petsData.find(p => p.petID === pet)} />
                     </div>
                 </div>
             )}

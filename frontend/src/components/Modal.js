@@ -45,7 +45,7 @@ export default function Modal({likedPets, toggleLike, toggleModal, pet}) {
                         <td>{pet.petBreed}</td>
                         <td>{pet.petSex}</td>
                         <td>{pet.petWeight} lbs</td>
-                        <td>{pet.petAge} yrs</td>
+                        <td>{pet.petAgeInYrs} yrs</td>
                         <td>{formattedDate}</td>
                         <td>{pet.petAvailability}</td>
                     </tr>

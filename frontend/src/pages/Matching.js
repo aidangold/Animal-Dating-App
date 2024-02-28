@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Matchfilter from '../components/Matchfilter';
 import Photocards from '../components/Photocards';
+import { filterPets } from '../components/filterPets';
 import './matching.css';
 
 // Function to return true if pet's Availability is "Available"
@@ -69,6 +70,9 @@ export default function Matching() {
         }
     }
 
+    // filter pets depending on filter state
+    const petsData = filterPets(availablePets, isFilter);
+
     return (
         <>
             <div className="filter-button">
@@ -79,7 +83,7 @@ export default function Matching() {
             
             <div className="matching-main">
                 <Photocards 
-                    availablePets={availablePets} />
+                    petsData={petsData} />
             </div>
         </>
     )

@@ -13,6 +13,7 @@ export default function Matchfilter({ isFilter, filterClick }) {
     const [isOpen, setIsOpen] = useState(false);
 
     // Resizes body of content when filter menu is open
+    // (!!!FIX WHEN USER CLICKS AWAY FROM PAGE WITH MENU OPEN)
     if (isOpen) {
         document.body.classList.add('active-filter')
     }
