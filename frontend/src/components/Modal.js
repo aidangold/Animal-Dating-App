@@ -1,10 +1,13 @@
 import { format } from "date-fns";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import { pink, lightBlue } from '@mui/material/colors';
+import { pink, lightBlue, grey } from '@mui/material/colors';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import Chip from '@mui/material/Chip';
 
 // modal tutorial by The Web School. https://www.youtube.com/watch?v=9DwGahSqcEc
-export default function Modal({pet}) {
+export default function Modal({likedPets, toggleLike, toggleModal, pet}) {
     const theme = createTheme({
         palette: {
           primary: {
@@ -55,6 +58,15 @@ export default function Modal({pet}) {
             </div>
             <h3>Description</h3>
             <p>{pet.petDescription}</p>
+            <div className="modal-btns">
+                <button className="close-modal" onClick={toggleModal}>
+                    <CloseRoundedIcon sx={{color: grey[900], fontSize: 36 }} />
+                </button>
+
+                <button className="like-modal" onClick={() => toggleLike(pet.petID)}>
+                    {likedPets.includes(pet.petID) ? <FavoriteIcon sx={{color: pink[500], fontSize: 36 }} /> : <FavoriteBorderIcon sx={{color: pink[500], fontSize: 36 }}/>} 
+                </button>
+            </div>
         </ThemeProvider>
     )
 }
