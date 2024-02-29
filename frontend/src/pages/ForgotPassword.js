@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './LogIn.css';
 
-function LogInPage() {
+function ForgotPasswordPage() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        username: '',
-        password: ''
+        email: '',
     });
 
     const handleChange = (e) => {
@@ -19,15 +18,13 @@ function LogInPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // future add the code for logic details when ready
         console.log(formData);
 
         const DataToSend = {
-            userName: formData.username,
-            password: formData.password,
+            userEmail: formData.email,
         };
 
-        fetch('http://localhost:5000/login', {
+        fetch('http://localhost:5000/forgot-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -44,8 +41,8 @@ function LogInPage() {
         })
         .then(data => {
             console.log('Success:', data);
-            alert('Success: You are successfully logged in!')
-            navigate('/match');
+            alert('Success: Password reset link sent to your email!')
+            navigate('/login');
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -55,26 +52,17 @@ function LogInPage() {
 
     return (
         <div className="login-page">
-            <h2>Login Page</h2>
+            <h2>Reset Password Page</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label htmlFor="username">Username</label>
-                    <input type="text" id="username" name="username" value={formData.username} onChange={handleChange} required />
+                    <label htmlFor="email">Registered Email</label>
+                    <input type="text" id="email" name="email" value={formData.email} onChange={handleChange} required />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required />
-                </div>
-                <button type="submit">Log In</button>
+                <button type="submit">Reset Password</button>
+                <Link to="/login">Back</Link> 
             </form>
-            <div className="forgot-options">
-                <Link to="/forgot-password">Forgot Password</Link>
-                <Link to="/retrieve-username">Forgot Username</Link> 
-                <Link to="/signup">Sign Up</Link> 
-            </div>
         </div>
     );
 }
 
-export default LogInPage;
-
+export default ForgotPasswordPage;
