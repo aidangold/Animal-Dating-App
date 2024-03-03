@@ -1,7 +1,3 @@
-body.active-filter {
-    width: calc(100% - 280px);
-}
-
 .filter-menu {
     width: 250px;
     padding: 1.5vw;

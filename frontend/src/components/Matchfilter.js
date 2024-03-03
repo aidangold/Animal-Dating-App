@@ -13,15 +13,6 @@ import './matchfilter.css';
 export default function Matchfilter({ isFilter, filterClick }) {
     const [isOpen, setIsOpen] = useState(false);
 
-    // Resizes body of content when filter menu is open
-    // (!!!FIX WHEN USER CLICKS AWAY FROM PAGE WITH MENU OPEN)
-    if (isOpen) {
-        document.body.classList.add('active-filter')
-    }
-    else {
-        document.body.classList.remove('active-filter')
-    }
-
     return (
         <>
             <Button 
@@ -35,8 +26,7 @@ export default function Matchfilter({ isFilter, filterClick }) {
             <Drawer
                 anchor='right'
                 open={isOpen}
-                onClose={() => setIsOpen(false)}
-                variant="persistent">
+                onClose={() => setIsOpen(false)} >
                     <div className='filter-menu'>
                         <div className="filter-header">
                             <h3>Filter</h3>

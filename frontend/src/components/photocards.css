@@ -78,6 +78,7 @@ body.active-modal {
     right: 0;
     bottom: 0;
     position: fixed;
+    transition: all .3s;
 }
 
 .overlay {
@@ -106,6 +107,7 @@ body.active-modal {
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     color: #333;
+    transition: all .3s;
 
     img {
         max-width: 400px;
