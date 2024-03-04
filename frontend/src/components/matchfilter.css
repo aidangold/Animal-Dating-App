@@ -1,7 +1,3 @@
-body.active-filter {
-    width: calc(100% - 280px);
-}
-
 .filter-menu {
     width: 250px;
     padding: 1.5vw;
@@ -17,6 +13,10 @@ body.active-filter {
     background-color: #ddd;
     border-radius: 10px;
     padding-left: 13px;
+}
+
+.reset-btn{
+    text-align: right;
 }
 
 .chips {

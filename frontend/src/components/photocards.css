@@ -78,6 +78,7 @@ body.active-modal {
     right: 0;
     bottom: 0;
     position: fixed;
+    transition: all .3s;
 }
 
 .overlay {
@@ -106,6 +107,7 @@ body.active-modal {
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     color: #333;
+    transition: all .3s;
 
     img {
         max-width: 400px;
@@ -134,7 +136,7 @@ body.active-modal {
         margin-right: auto;
         padding-bottom: 15px;
         border-spacing: 0;
-        table-layout: fixed;
+        font-size: 14px;
 
         th {
             border-bottom: 2px solid #ccc;
@@ -169,4 +171,10 @@ body.active-modal {
     flex-direction: row;
     justify-content: space-evenly;
     padding: 0 60px;
+}
+
+.no-pets{
+    font-size: 1.2rem;
+    padding: 2vw;
+    line-height: 1.5em;
 }
