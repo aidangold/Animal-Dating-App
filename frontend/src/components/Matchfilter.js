@@ -5,60 +5,13 @@ import Drawer from '@mui/material/Drawer';
 import Chip from '@mui/material/Chip';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import CachedRoundedIcon from '@mui/icons-material/CachedRounded';
 import { useState } from "react";
 import './matchfilter.css';
 
 
-export default function Matchfilter() {
+export default function Matchfilter({ isFilter, filterClick }) {
     const [isOpen, setIsOpen] = useState(false);
-
-    const [isFilter, setIsFilter] = useState({
-        0: [],    // type
-        1: [],    // sex
-        2: [],    // age
-        3: []     // weight 
-    });
-
-    const filterClick = (index, selected) => {
-        if (selected === 'any') {
-            // if any is selected, chip is displayed active if less than max num of states
-            if (isFilter[index].length > 0) {
-                setIsFilter({...isFilter, [index]: []});
-            }
-        }
-        else {
-            // add selected to states
-            if (!isFilter[index].includes(selected)) {
-                setIsFilter({
-                    ...isFilter,
-                    [index]: [...isFilter[index], selected]
-                });
-            }
-            // deselect
-            else {
-                if (isFilter[index].length == 1) {
-                    setIsFilter({
-                        ...isFilter,
-                        [index]: []
-                    });
-                }
-                else {
-                    setIsFilter({
-                        ...isFilter,
-                        [index]: isFilter[index].filter(a => a !== selected)
-                    });
-                }      
-            }
-        }
-    }
-
-    // Resizes body of content when filter menu is open
-    if (isOpen) {
-        document.body.classList.add('active-filter')
-    }
-    else {
-        document.body.classList.remove('active-filter')
-    }
 
     return (
         <>
@@ -73,8 +26,7 @@ export default function Matchfilter() {
             <Drawer
                 anchor='right'
                 open={isOpen}
-                onClose={() => setIsOpen(false)}
-                variant="persistent">
+                onClose={() => setIsOpen(false)} >
                     <div className='filter-menu'>
                         <div className="filter-header">
                             <h3>Filter</h3>
@@ -84,6 +36,14 @@ export default function Matchfilter() {
                                 onClick={() => setIsOpen(false)}>
                                     <CloseRoundedIcon />
                             </IconButton>
+                        </div>
+                        <div className="reset-btn">
+                            <Button
+                                onClick={() => filterClick(-1, 'any')}
+                                variant="text"
+                                startIcon={<CachedRoundedIcon/>}>
+                                    Reset Filter
+                            </Button>
                         </div>
 
                         <h4>Pet Types</h4>
@@ -135,7 +95,7 @@ export default function Matchfilter() {
                             { isFilter[3].includes('w1025') ? <Chip label='10-25 lbs' onClick={() => filterClick(3, 'w1025')} variant='filled' /> :
                                 <Chip label='10-25 lbs' onClick={() => filterClick(3, 'w1025')} variant='outlined' /> }
                             { isFilter[3].includes('w2550') ? <Chip label='25-50 lbs' onClick={() => filterClick(3, 'w2550')} variant='filled' /> :
-                                <Chip label='2550 lbs' onClick={() => filterClick(3, 'w2550')} variant='outlined' /> }
+                                <Chip label='25-50 lbs' onClick={() => filterClick(3, 'w2550')} variant='outlined' /> }
                             { isFilter[3].includes('w50p') ? <Chip label='50+ lbs' onClick={() => filterClick(3, 'w50p')} variant='filled' /> :
                                 <Chip label='50+ lbs' onClick={() => filterClick(3, 'w50p')} variant='outlined' /> }
                         </div>
