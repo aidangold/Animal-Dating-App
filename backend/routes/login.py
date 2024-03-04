@@ -70,7 +70,7 @@ def reset_password(token):
     serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     try:
         # attempt to load the email from the token within the expiration time
-        userEmail = serializer.loads(token, salt='password-reset-salt', max_age=600)
+        userEmail = serializer.loads(token, salt='password-reset-salt', max_age=86400)
     except SignatureExpired:
         # return an error if the token has expired
         return jsonify({'error': 'Token has expired'}), 400
