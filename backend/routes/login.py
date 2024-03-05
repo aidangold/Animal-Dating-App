@@ -55,7 +55,7 @@ def request_password_reset():
         # generate a secure token for the password reset
         token = serializer.dumps(userEmail, salt='password-reset-salt')
         # create the reset link with the token as a parameter
-        reset_link = f"https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/reset-password/{token}"
+        reset_link = f"http://localhost:3000/reset-password/{token}"
         # set up the email message with the reset link
         msg = Message("Password Reset Request", sender="467catdogadoption@gmail.com", recipients=[userEmail])
         msg.body = f"Your password reset link is: {reset_link}\nPlease note that this link will expire in 10 minutes."
