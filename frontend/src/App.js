@@ -8,6 +8,7 @@ import LogInPage from './pages/LogIn';
 import ForgotPasswordPage from './pages/ForgotPassword';
 import ResetPasswordPage from './pages/ResetPassword';
 import RetrieveUsernamePage from './pages/RetrieveUsername';
+import AddPetForm from './pages/AddPet';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path='/forgot-password' element={<ForgotPasswordPage />} />
             <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
             <Route path='/retrieve-username' element={<RetrieveUsernamePage />} />
+            <Route path='/add-pet' element={<AddPetForm />} />
           </Routes>
 
           <div id="footer">

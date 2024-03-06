@@ -1,0 +1,76 @@
+#crud-main {
+    width: 60vw;
+    max-width: 600px;
+    margin: auto;
+    background-color: #eee;
+    padding: 5px 26px 0px 26px;
+
+    h2 {
+        color: #E35D7B;
+        font-size: 2.5em;
+        font-family: 'poppins', sans-serif;
+        margin: 12px 0;
+    }
+}
+
+/* css form example from w3schools: https://www.w3schools.com/css/tryit.asp?filename=trycss_forms */
+.pet-form {
+    label {
+        font-family: 'poppins', sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    input[type=text], input[type="number" i], input[type="date" i], select {
+        width: 100%;
+        padding: 10px 16px;
+        margin: 5px 0 14px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-family: 'roboto', sans-serif;
+        font-size: 16px;
+    }
+
+    legend {
+        font-size: 18px;
+        font-family: 'poppins', sans-serif;
+        font-weight: bold;
+    }
+
+    fieldset {
+        margin: 8px 0;
+        padding: 12px 20px;
+        border-radius: 4px;
+        border-color: #ccc;
+        box-sizing: border-box;
+
+        label {
+            font-size: 16px;
+            font-family: 'roboto', sans-serif;
+            font-weight: 400;
+        }
+    }
+
+    input[type="checkbox" i] {
+        margin: 4px 6px 12px 16px;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      input[type=submit]:hover {
+        background-color: #45a049;
+      }      
+
+}
