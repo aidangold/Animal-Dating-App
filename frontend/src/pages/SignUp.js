@@ -45,7 +45,7 @@ function SignupPage() {
             userRole: 'user' // default to 'user'
         };
 
-        fetch('http://localhost:5000/signup', {
+        fetch('https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

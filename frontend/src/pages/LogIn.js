@@ -18,7 +18,7 @@ function LogInPage() {
     };
 
     const loginUser = (DataToSend) => {
-        fetch('http://localhost:5000/login', {
+        fetch('https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
