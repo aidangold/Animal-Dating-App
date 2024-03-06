@@ -24,7 +24,7 @@ function RetrieveUsernamePage() {
             userEmail: formData.email,
         };
 
-        fetch('http://localhost:5000/retrieve-username', {
+        fetch('https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/retrieve-username', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

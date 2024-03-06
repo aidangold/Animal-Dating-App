@@ -32,7 +32,7 @@ function ResetPasswordPage() {
             newpassword: formData.newpassword,
         };
 
-        fetch(`http://localhost:5000/reset-password/${token}`, {
+        fetch(`https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/reset-password/${token}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
