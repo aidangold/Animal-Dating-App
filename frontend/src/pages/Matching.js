@@ -13,7 +13,7 @@ export default function Matching() {
     // fetch and store full pet data
     const [fullPetData, setFullPetData] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:5000/pets')
+        fetch('https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/pets')
         .then((res) => {
             if (!res.ok) {
                 return Promise.reject(res);  // reject errors

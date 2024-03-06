@@ -24,7 +24,7 @@ function ForgotPasswordPage() {
             userEmail: formData.email,
         };
 
-        fetch('http://localhost:5000/forgot-password', {
+        fetch('https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/forgot-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
