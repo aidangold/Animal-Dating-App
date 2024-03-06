@@ -75,3 +75,22 @@ nav{
 .button:hover {
     background-color: #007bff;
 }
+
+.select-style {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #D6385C;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    width: fit-content;
+}
+
+.select-style:focus, .select-style:hover {
+    border-color: #aaa;
+}

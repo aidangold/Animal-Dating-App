@@ -17,16 +17,7 @@ function LogInPage() {
         }));
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // future add the code for logic details when ready
-        console.log(formData);
-
-        const DataToSend = {
-            userName: formData.username,
-            password: formData.password,
-        };
-
+    const loginUser = (DataToSend) => {
         fetch('http://localhost:5000/login', {
             method: 'POST',
             headers: {
@@ -44,12 +35,26 @@ function LogInPage() {
         })
         .then(data => {
             console.log('Success:', data);
-            alert('Success: You are successfully logged in!')
+            // Save user_id and user_name to sessionStorage
+            sessionStorage.setItem('user_id', data.user_id);
+            sessionStorage.setItem('user_name', data.userName);
+            const loginEvent = new CustomEvent('loginSuccess', { detail: { user_name: data.userName } });
+            window.dispatchEvent(loginEvent);
+            alert('Success: You are successfully logged in!');
             navigate('/match');
         })
         .catch((error) => {
             console.error('Error:', error);
             alert(`Error: ${error.message}`);
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(formData);
+        loginUser({
+            userName: formData.username,
+            password: formData.password
         });
     };
 
