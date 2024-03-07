@@ -32,6 +32,7 @@ function LogInPage() {
             const data = await response.json();
             if (response.ok) {
                 console.log(data.message); // happy login
+                window.location.href = 'http://localhost:3000/match'; //redirect
             } else {
                 console.log(data.error);
             }

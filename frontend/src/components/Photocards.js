@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import data from '../sample/pets.json';
 import { lightBlue, pink, grey } from '@mui/material/colors';
 import PetsRoundedIcon from '@mui/icons-material/PetsRounded';
@@ -11,6 +11,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import './photocards.css';
 import Modal from './Modal';
+import { addToFavorites, removeFromFavorites } from '../api';
 
 const filterAvailable = (pets) => {
     return pets.petAvailability === "Available";
@@ -20,12 +21,30 @@ const availablePets = data.filter(filterAvailable);
 
 export default function Photocard() {
     const [likedPets, setLikedPets] = useState([]);
+    const [userID, setUserID] = useState(null);
 
-    const toggleLike = (petID) => {
-        if (likedPets.includes(petID)) {
-            setLikedPets(likedPets.filter(id => id !== petID));
-        } else {
-            setLikedPets([...likedPets, petID]);
+    useEffect(() => {
+        // TODO FIX FIX FIX
+        const userIDFromAuth = '123'; // HARD CODED JUST TO CHECK CONNECTION
+        setUserID(userIDFromAuth);
+    }, []);
+
+    const toggleLike = async (petID) => {
+        try {
+            if (!userID) {
+                console.error('User ID not available.');
+                return; 
+            }
+
+            if (!likedPets.includes(petID)) {
+                await addToFavorites(userID, petID); // Pass user ID here
+                setLikedPets([...likedPets, petID]);
+            } else {
+                await removeFromFavorites(userID, petID); // Pass user ID here
+                setLikedPets(likedPets.filter(id => id !== petID));
+            }
+        } catch (error) {
+            console.error('Error:', error);
         }
     };
 
@@ -47,7 +66,7 @@ export default function Photocard() {
     const petdata = availablePets.map((pet) => (
         <div className="photocard" key={pet.petID}>
             <div onClick={()=> {toggleModal(pet.petID);}}>
-                <img
+            <img
                     src={require('../sample/photos/' + pet.petPicture + '.jpg')}
                     height={400}
                     alt={pet.name}
@@ -98,5 +117,3 @@ export default function Photocard() {
         </>
     );
 }
-
-
