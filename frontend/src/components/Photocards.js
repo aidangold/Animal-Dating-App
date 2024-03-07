@@ -45,11 +45,13 @@ export default function Photocard({ petsData }) {
     const petdata = petsData.map((pet) => (
         <div className="photocard" key={pet.petID}>
             <div onClick={()=> {toggleModal(pet.petID);}}>
-                <img
+                <div className='pet-img'>
+                    <img
                     src={pet.petPicture}
                     height={400}
                     alt={pet.name}
-                />
+                    />
+                </div>
                 <h2>{pet.petName}</h2>
                 <ul>
                     <li><PetsRoundedIcon sx={{ fontSize: 16, color: lightBlue[900] }} /></li>
