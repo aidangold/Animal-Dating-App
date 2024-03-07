@@ -3,4 +3,5 @@ frontend/.yarn/install-state.gz
 frontend/.yarn/
 frontend/.pnp.loader.mjs
 frontend/.pnp.cjs
-frontend/src/config.js
+frontend/.env
+frontend/yarn.lock

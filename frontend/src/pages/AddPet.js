@@ -1,29 +1,17 @@
 import React, { useState } from 'react';
 import { uploadFile } from 'react-s3';
 import './addpet.css';
-import '../config';
 
 // !!! Validate user is logged in and has admin role
 
-// configure your s3 bucket values as see fit in a config.js file in frontend root
+// configure your s3 bucket values as see fit in the .env
 // tutorial on how to upload file to aws s3 bucket in React:
 // https://www.mohammadfaisal.dev/blog/how-to-upload-files-to-aws-s3-in-react
-const config = {
-    bucketName: S3_BUCKET,
-    region: REGION,
-    accessKeyId: ACCESS_KEY,
-    secretAccessKey: SECRET_ACCESS_KEY,
-}
 
 // https://react.dev/reference/react-dom/components/select#reading-the-select-box-value-when-submitting-a-form
 export default function AddPetForm() {
-    // For uploading image to AWS S3:
+    
     const [selectedFile, setSelectedFile] = useState(null);
-    const [imgData, setImgData] = useState([]);
-
-    const handleFileInput = (e) => {
-        setSelectedFile(e.target.files[0]);
-    }
 
     const handleSubmit = (e) => {
         // Prevent the browser from reloading the page
@@ -32,23 +20,17 @@ export default function AddPetForm() {
         const form = e.target;
         const formData = new FormData(form);
 
-        // upload to s3 bucket
-        uploadFile(selectedFile, config)
-            .then((data) => {
-                console.log(data);
-                setImgData(data);   // save response data
-            })
-            .catch(err => console.error(err));
-
-        // get img location url & append to formData
-        const imgUrl = imgData.location;
+        const imgUrl = "https://ada467.s3.us-east-2.amazonaws.com/rupert.jpg";
         formData.append("petPicture", imgUrl);
 
-        // You can pass formData as a fetch body directly:
-        fetch('https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/pets', { method: form.method, body: formData });
-
         // Or you can get an array of name-value pairs.
-        console.log([...formData.entries()]);
+        const formJson = Object.fromEntries(formData.entries());
+        console.log(formJson);
+
+        // You can pass formData as a fetch body directly:
+        //fetch('https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/pets', { 
+          //  method: form.method, body: formData 
+        //});
     }
 
     return (
@@ -77,16 +59,28 @@ export default function AddPetForm() {
                 <input type='text' name="petBreed" />
 
                 <label>Birthday </label>
-                <input type='date' name="petBirthdat" />
+                <input type='date' name="petBirthday" />
 
                 <fieldset>
-                    <legend>Attributes</legend>
-                    <input type="checkbox" id="gWA" name="goodWithAnimals" value="true" />
-                    <label for="gWA">Good with Animals</label>
-                    <input type="checkbox" id="gWC" name="goodWithChildren" value="true" />
-                    <label for="gWC">Good with Children</label>
-                    <input type="checkbox" id="mBL" name="mustBeLeashed" value="true" />
-                    <label for="mBL">Must be Leashed</label>
+                    <legend>Good with Animals</legend>
+                    <input type="radio" id="gWAy" name="goodWithAnimals" value="true" />
+                    <label htmlFor="gWAy">Yes</label>
+                    <input type="radio" id="gWAn" name="goodWithAnimals" value="false" />
+                    <label htmlFor="gWAn">No</label>
+                </fieldset>
+                <fieldset>
+                    <legend>Good with Children</legend>
+                    <input type="radio" id="gWCy" name="goodWithChildren" value="true" />
+                    <label htmlFor="gWCy">Yes</label>
+                    <input type="radio" id="gWCn" name="goodWithChildren" value="false" />
+                    <label htmlFor="gWCn">No</label>
+                </fieldset>
+                <fieldset>
+                    <legend>Must be Leashed</legend>
+                    <input type="radio" id="mBLy" name="mustBeLeashed" value="true" />
+                    <label htmlFor="mBLy">Yes</label>
+                    <input type="radio" id="mBLn" name="mustBeLeashed" value="false" />
+                    <label htmlFor="mBLn">No</label>
                 </fieldset>
 
                 <label>Availability</label>
@@ -100,9 +94,7 @@ export default function AddPetForm() {
                 <label>Description</label>
                 <textarea name="petDescription"></textarea>
 
-                <label>Image Upload</label>
-                <input type="file" onChange={handleFileInput}/>
-                <button type="submit" onClick={handleSubmit}>Submit</button>
+                <input type="submit" value="Submit"/>
             </form>
         </div>
     )
