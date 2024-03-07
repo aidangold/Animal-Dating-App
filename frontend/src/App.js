@@ -8,8 +8,11 @@ import LogInPage from './pages/LogIn';
 import ForgotPasswordPage from './pages/ForgotPassword';
 import ResetPasswordPage from './pages/ResetPassword';
 import RetrieveUsernamePage from './pages/RetrieveUsername';
+import AddPetForm from './pages/AddPet';
+import ViewPets from './pages/ViewPets';
 
 function App() {
+
   return (
     <>
       <div id="main">
@@ -26,6 +29,8 @@ function App() {
             <Route path='/forgot-password' element={<ForgotPasswordPage />} />
             <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
             <Route path='/retrieve-username' element={<RetrieveUsernamePage />} />
+            <Route path='/add-pet' element={<AddPetForm />} />
+            <Route path='/view-pets' element={<ViewPets /> } />
           </Routes>
 
           <div id="footer">
