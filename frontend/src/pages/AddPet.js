@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './addpet.css';
 
 // !!! Validate user is logged in and has admin role
@@ -9,6 +10,8 @@ import './addpet.css';
 
 // https://react.dev/reference/react-dom/components/select#reading-the-select-box-value-when-submitting-a-form
 export default function AddPetForm() {
+    const navigate = useNavigate();
+
     const [file, setFile] = useState();
 
     function handleChange(event) {
@@ -24,6 +27,10 @@ export default function AddPetForm() {
 
         formData.append("petPicture", file);
 
+        const date = new Date();
+        const currentDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
+        formData.append('addedDate', currentDate);
+
         // Or you can get an array of name-value pairs.
         const formJson = Object.fromEntries(formData.entries());
         console.log(formJson);
@@ -32,7 +39,6 @@ export default function AddPetForm() {
         fetch('https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/pets', { 
             method: form.method, 
             headers: {
-                'content-type': 'multipart/form-data',
             },
             body: formData 
         })
@@ -47,7 +53,7 @@ export default function AddPetForm() {
         .then(data => {
             console.log('Success:', data);
             alert('Pet added!')
-            navigate('/login');
+            navigate('/');
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -68,14 +74,14 @@ export default function AddPetForm() {
 
                 <label>Type </label>
                 <select name="petType" defaultValue="dog">
-                    <option value="dog">Dog</option>
-                    <option value="cat">Cat</option>
+                    <option value="Dog">Dog</option>
+                    <option value="Cat">Cat</option>
                 </select>
 
                 <label>Sex</label>
                 <select name="petSex" defaultValue="male">
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                 </select>
 
                 <label>Breed</label>

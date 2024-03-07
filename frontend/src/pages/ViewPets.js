@@ -33,7 +33,7 @@ export default function ViewPets () {
 
     function handleDelete (petId) {
         fetch(`https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/pets/${petId}`, {
-            method: DELETE
+            method: 'DELETE'
         })
         .then(response => {
             if (!response.ok) {
