@@ -88,21 +88,21 @@ export default function AddPetForm() {
                     <legend>Good with Animals</legend>
                     <input type="radio" id="gWAy" name="goodWithAnimals" value="true" />
                     <label htmlFor="gWAy">Yes</label>
-                    <input type="radio" id="gWAn" name="goodWithAnimals" value="false" checked />
+                    <input type="radio" id="gWAn" name="goodWithAnimals" value="false" defaultChecked />
                     <label htmlFor="gWAn">No</label>
                 </fieldset>
                 <fieldset>
                     <legend>Good with Children</legend>
                     <input type="radio" id="gWCy" name="goodWithChildren" value="true" />
                     <label htmlFor="gWCy">Yes</label>
-                    <input type="radio" id="gWCn" name="goodWithChildren" value="false" checked />
+                    <input type="radio" id="gWCn" name="goodWithChildren" value="false" defaultChecked />
                     <label htmlFor="gWCn">No</label>
                 </fieldset>
                 <fieldset>
                     <legend>Must be Leashed</legend>
                     <input type="radio" id="mBLy" name="mustBeLeashed" value="true" />
                     <label htmlFor="mBLy">Yes</label>
-                    <input type="radio" id="mBLn" name="mustBeLeashed" value="false" checked />
+                    <input type="radio" id="mBLn" name="mustBeLeashed" value="false" defaultChecked />
                     <label htmlFor="mBLn">No</label>
                 </fieldset>
 
