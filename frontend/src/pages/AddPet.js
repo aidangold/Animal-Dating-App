@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { uploadFile } from 'react-s3';
-import { useNavigate } from 'react-router-dom';
 import './addpet.css';
 
 // !!! Validate user is logged in and has admin role
