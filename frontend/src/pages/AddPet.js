@@ -60,12 +60,13 @@ export default function AddPetForm() {
     return (
         <div id='crud-main'>
             <h2>Add a Pet</h2>
-            <form className="pet-form" method="POST" autoComplete="off" onSubmit={handleSubmit}>
+            <form id="pet-form" method="POST" autoComplete="off" onSubmit={handleSubmit}>
                 <label>Name </label>
-                <input type="text" name="petName" />
+                <input type="text" name="petName" required />
                 
                 <label>Weight </label>
-                <input type="number" name="petWeight" onChange={(e) => e.target.value < 0 ? (e.target.value = 0) : e.target.value} />
+                <input type="number" name="petWeight" required
+                    onChange={(e) => e.target.value < 0 ? (e.target.value = 0) : e.target.value} />
 
                 <label>Type </label>
                 <select name="petType" defaultValue="dog">
@@ -80,30 +81,30 @@ export default function AddPetForm() {
                 </select>
 
                 <label>Breed</label>
-                <input type='text' name="petBreed" />
+                <input type='text' name="petBreed" required />
 
                 <label>Birthday </label>
-                <input type='date' name="petBirthday" />
+                <input type='date' name="petBirthday" required />
 
                 <fieldset>
                     <legend>Good with Animals</legend>
                     <input type="radio" id="gWAy" name="goodWithAnimals" value="true" />
                     <label htmlFor="gWAy">Yes</label>
-                    <input type="radio" id="gWAn" name="goodWithAnimals" value="false" />
+                    <input type="radio" id="gWAn" name="goodWithAnimals" value="false" checked />
                     <label htmlFor="gWAn">No</label>
                 </fieldset>
                 <fieldset>
                     <legend>Good with Children</legend>
                     <input type="radio" id="gWCy" name="goodWithChildren" value="true" />
                     <label htmlFor="gWCy">Yes</label>
-                    <input type="radio" id="gWCn" name="goodWithChildren" value="false" />
+                    <input type="radio" id="gWCn" name="goodWithChildren" value="false" checked />
                     <label htmlFor="gWCn">No</label>
                 </fieldset>
                 <fieldset>
                     <legend>Must be Leashed</legend>
                     <input type="radio" id="mBLy" name="mustBeLeashed" value="true" />
                     <label htmlFor="mBLy">Yes</label>
-                    <input type="radio" id="mBLn" name="mustBeLeashed" value="false" />
+                    <input type="radio" id="mBLn" name="mustBeLeashed" value="false" checked />
                     <label htmlFor="mBLn">No</label>
                 </fieldset>
 
@@ -116,12 +117,13 @@ export default function AddPetForm() {
                 </select>
 
                 <label>Description</label>
-                <textarea name="petDescription"></textarea>
+                <textarea name="petDescription" required></textarea>
 
                 <label>Upload a Photo</label>
-                <input type="file" onChange={handleChange} />
-
-                <input type="submit" value="Submit"/>
+                <br></br>
+                <input type="file" accept="image/*" onChange={handleChange} required />
+                <br></br>
+                <input type="reset" value="Reset" /> <input type="submit" value="Submit"/>
             </form>
         </div>
     )
