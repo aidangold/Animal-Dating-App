@@ -9,7 +9,7 @@ import ForgotPasswordPage from './pages/ForgotPassword';
 import ResetPasswordPage from './pages/ResetPassword';
 import RetrieveUsernamePage from './pages/RetrieveUsername';
 import AddPetForm from './pages/AddPet';
-
+import UploadImg from './pages/UploadImg';
 
 function App() {
 

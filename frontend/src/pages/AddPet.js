@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { uploadFile } from 'react-s3';
+import { useNavigate } from 'react-router-dom';
 import './addpet.css';
 
 // !!! Validate user is logged in and has admin role
@@ -10,8 +11,11 @@ import './addpet.css';
 
 // https://react.dev/reference/react-dom/components/select#reading-the-select-box-value-when-submitting-a-form
 export default function AddPetForm() {
-    
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [file, setFile] = useState();
+
+    function handleChange(event) {
+        setFile(event.target.files[0]);
+    }
 
     const handleSubmit = (e) => {
         // Prevent the browser from reloading the page
@@ -20,17 +24,37 @@ export default function AddPetForm() {
         const form = e.target;
         const formData = new FormData(form);
 
-        const imgUrl = "https://ada467.s3.us-east-2.amazonaws.com/rupert.jpg";
-        formData.append("petPicture", imgUrl);
+        formData.append("petPicture", file);
 
         // Or you can get an array of name-value pairs.
         const formJson = Object.fromEntries(formData.entries());
         console.log(formJson);
 
         // You can pass formData as a fetch body directly:
-        //fetch('https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/pets', { 
-          //  method: form.method, body: formData 
-        //});
+        fetch('https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/pets', { 
+            method: form.method, 
+            headers: {
+                'content-type': 'multipart/form-data',
+            },
+            body: formData 
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => {
+                    throw new Error(err.error);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            alert('Pet added!')
+            navigate('/login');
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert(`Error: ${error.message}`);
+        });
     }
 
     return (
@@ -93,6 +117,9 @@ export default function AddPetForm() {
 
                 <label>Description</label>
                 <textarea name="petDescription"></textarea>
+
+                <label>Upload a Photo</label>
+                <input type="file" onChange={handleChange} />
 
                 <input type="submit" value="Submit"/>
             </form>
