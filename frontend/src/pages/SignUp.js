@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './SignUp.css';
 
 function SignupPage() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
+        userfirstname: '',
+        userlastname: '',
+        userphone: '',
+        contactaddress: '',
         username: '',
         email: '',
         password: '',
@@ -23,42 +29,49 @@ function SignupPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        // Check if passwords match
+        // future code for signup functionality logic and stuff here
+        console.log(formData);
+
+        // check if passwords match
         if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match.");
+            alert('Error: Passwords do not match.');
             return;
         }
-    
-        // Prepare the data to be sent to the backend
-        const userData = {
+
+        const DataToSend = {
             userName: formData.username,
             password: formData.password,
             userEmail: formData.email,
-            userFirstName: formData.firstName,
-            userLastName: formData.lastName,
-            userPhoneNo: formData.phoneNumber,
-            contactAddress: formData.contactAddress,
-            userRole: "user"
+            userFirstName: formData.userfirstname,
+            userLastName: formData.userlastname,
+            userPhoneNo: formData.userphone,
+            contactAddress: formData.contactaddress,
+            userRole: 'user' // default to 'user'
         };
-    
-        // POST request to the backend
-        fetch('http://localhost:5000/register', {
+
+        fetch('https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/signup', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(userData)
+            body: JSON.stringify(DataToSend),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => {
+                    throw new Error(err.error);
+                });
+            }
+            return response.json();
+        })
         .then(data => {
             console.log('Success:', data);
-            // Redirect to login page
-            console.log('Redirecting to login page...');
-            window.location.href = 'http://localhost:3000/login';
+            alert('Thank For Registering!\nYour registration has been successful.')
+            navigate('/login');
         })
         .catch((error) => {
             console.error('Error:', error);
+            alert(`Error: ${error.message}`);
         });
     };
     
@@ -67,6 +80,22 @@ function SignupPage() {
         <div className="signup-page">
             <h2>Sign Up</h2>
             <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label htmlFor="userfirstname">First Name</label>
+                    <input type="text" id="userfirstname" name="userfirstname" value={formData.userfirstname} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="userlastname">Last Name</label>
+                    <input type="text" id="userlastname" name="userlastname" value={formData.userlastname} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="userphone">Phone Number</label>
+                    <input type="text" id="userphone" name="userphone" value={formData.userphone} onChange={handleChange} />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="contactaddress">Contact Address</label>
+                    <input type="text" id="contactaddress" name="contactaddress" value={formData.contactaddress} onChange={handleChange} />
+                </div>
                 <div className="form-group">
                     <label htmlFor="username">Username</label>
                     <input type="text" id="username" name="username" value={formData.username} onChange={handleChange} required />

@@ -1,5 +1,7 @@
 .filter-button{
-    position: relative;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
     text-align: right;
     padding-right: 2vw;
     padding-top: 10px;
