@@ -23,7 +23,7 @@ def login():
 
     # retrieve the hashed password from the database for the given username
     # the query uses named parameters to prevent SQL injection
-    query = text("SELECT user_id, user_password, user_name FROM users WHERE user_name = :userName")
+    query = text("SELECT user_id, user_password, user_name, user_role FROM users WHERE user_name = :userName")
 
     # executes the query and fetches the first result, if any
     result = db.session.execute(query, {'userName': userName}).fetchone()
@@ -33,7 +33,7 @@ def login():
     if result and check_password_hash(result[1], password):
         # user is authenticated, set user identifier in session
         session['user_id'] = result[0]  # Storing user_id in session
-        return jsonify({'message': 'Login successful', 'user_id': result[0],'userName': result[2]}), 200
+        return jsonify({'message': 'Login successful', 'user_id': result[0],'userName': result[2], 'userRole': result[3]}), 200
     else:
         return jsonify({'error': 'Invalid username or password'}), 401
 
@@ -57,7 +57,7 @@ def request_password_reset():
         # generate a secure token for the password reset
         token = serializer.dumps(userEmail, salt='password-reset-salt')
         # create the reset link with the token as a parameter
-        reset_link = f"http://localhost:3000/reset-password/{token}"
+        reset_link = f"https://anidate-frontend-jw3ac35l4q-uc.a.run.app/reset-password/{token}"
         # set up the email message with the reset link
         msg = Message("Password Reset Request", sender="467catdogadoption@gmail.com", recipients=[userEmail])
         msg.body = f"Your password reset link is: {reset_link}\nPlease note that this link will expire in 10 minutes."
