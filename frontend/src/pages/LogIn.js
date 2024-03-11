@@ -38,6 +38,7 @@ function LogInPage() {
             // Save user_id and user_name to sessionStorage
             sessionStorage.setItem('user_id', data.user_id);
             sessionStorage.setItem('user_name', data.userName);
+            sessionStorage.setItem('userRole', data.userRole)
             const loginEvent = new CustomEvent('loginSuccess', { detail: { user_name: data.userName } });
             window.dispatchEvent(loginEvent);
             alert('Success: You are successfully logged in!');
@@ -82,4 +83,3 @@ function LogInPage() {
 }
 
 export default LogInPage;
-

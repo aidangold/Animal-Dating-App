@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import IconButton from '@mui/material/IconButton';
+import { useNavigate } from 'react-router-dom';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
@@ -10,6 +11,7 @@ export default function ViewPets() {
     const [fullPetData, setFullPetData] = useState([]);
     const [editedPetId, setEditedPetId] = useState(null);
     const [editedPetData, setEditedPetData] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchPetData();
@@ -33,6 +35,18 @@ export default function ViewPets() {
                 })
             });
     }
+
+    function checkAuthorization() {
+        const userRole = sessionStorage.getItem('userRole'); // sessionStorage is better than local simple as
+        if (userRole !== 'admin') {
+            navigate('/')
+        }
+    }
+
+    
+    useEffect(() => {
+        checkAuthorization(); // if auth then not redirected
+    }, []);
 
     function handleEdit(petId) {
         const editedPet = fullPetData.find(pet => pet.petID === petId);
