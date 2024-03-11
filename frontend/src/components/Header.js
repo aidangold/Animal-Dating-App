@@ -62,7 +62,7 @@ export default function Header() {
                     <Link to="/">OSU Adoption Center</Link>
                 </div>
                 <div className="header-nav">
-                    <a href="/match">Match with Pets</a>
+                    <Link to="/match" className="link">Match with Pets</Link>
                     {isLoggedIn ? (
                         <select className="select-style" onChange={handleSelectChange} value="">
                             <option value="" disabled>{auth.username}</option>
