@@ -3,7 +3,9 @@ from flask import Blueprint, jsonify, request
 from sqlalchemy import text
 from db import db
 from werkzeug.utils import secure_filename
+from werkzeug.datastructures import FileStorage
 from uploads.s3_functions import upload_to_s3
+from urllib.parse import urlparse
 
 pets_blueprint = Blueprint('pets', __name__)
 
@@ -84,7 +86,7 @@ def get_pets():
             'mustBeLeashed': row.must_be_leashed,
             'petAvailability': row.pet_availability,
             'petPicture': f'https://{BUCKET}.s3.{REGION}.amazonaws.com/{row.pet_picture}',
-            'addedData': row.added_date,
+            'addedDate': row.added_date,
             'petDescription': row.pet_description,
             }
             pets.append(pet_data)
@@ -103,26 +105,54 @@ def update_pet(pet_id):
     if not pet_exists:
         return jsonify({'error': 'Pet with specified ID does not exist'}), 404
 
-    # extract JSON data from the request
-    data = request.get_json()
+    data = {
+        'pet_id': pet_id,
+        'pet_name': request.form.get('petName'),
+        'pet_weight': request.form.get('petWeight'),
+        'pet_type': request.form.get('petType'),
+        'pet_sex': request.form.get('petSex'),
+        'pet_breed': request.form.get('petBreed'),
+        'pet_birthday': request.form.get('petBirthday'),
+        'good_with_animals': request.form.get('goodWithAnimals'),
+        'good_with_children': request.form.get('goodWithChildren'),
+        'must_be_leashed': request.form.get('mustBeLeashed'),
+        'pet_availability': request.form.get('petAvailability'),
+        'added_date': request.form.get('addedDate'),
+        'pet_description': request.form.get('petDescription')
+    }
+
     # initialize parts of the SQL update statement and values dictionary
     update_parts = []
     update_values = {'pet_id': pet_id}
 
-    # fields that if included in the request, cannot be updated to empty values
-    critical_fields = ['pet_name', 'pet_type', 'pet_sex', 'pet_availability', 'added_date']
-    for field in critical_fields:
-        if field in data:
-            # check if the field value is not empty
-            if not data[field].strip():
-                return jsonify({'error': f'{field} cannot be updated to an empty value'}), 400
-            update_parts.append(f"{field} = :{field}")
-            update_values[field] = data[field]
+    if request.form.get('petPicture') and isinstance(request.form.get('petPicture'), str):
+        try:
+            url = urlparse(request.form.get('petPicture'))
+            path = url.path
+            path = path[1:] if path[0] == '/' else path
+            data['pet_picture'] = path
+        except Exception as e:
+            return jsonify({'error': 'Error parsing URL sent from frontend'})
 
-    # include other fields in the update if provided
-    optional_fields = ['pet_weight', 'pet_breed', 'pet_birthday', 'good_with_animals', 
-                       'good_with_children', 'must_be_leashed', 'pet_picture', 'pet_description']
-    for field in optional_fields:
+    # elif 'pet_picture' in data and isinstance(data['pet_picture'], FileStorage):
+    else:
+       try:
+            file_to_upload = request.files.get('petPicture')
+            file_name = secure_filename(file_to_upload.filename)
+            file_to_upload.save(os.path.join('uploads', file_name))
+            upload_success = upload_to_s3(f'uploads/{file_name}', BUCKET)
+
+            if not upload_success:
+                return jsonify({'error:' 'Upload to S3 failed'})
+            
+            data['pet_picture'] = f'uploads/{file_name}'
+       except Exception as e:
+           return jsonify({'error': 'Error updating pet with new picture'})
+
+    fields = ['pet_name', 'pet_weight', 'pet_breed', 'pet_birthday', 'good_with_animals', 
+                       'good_with_children', 'must_be_leashed', 'pet_picture', 'pet_description',
+                       'pet_type', 'pet_sex', 'pet_availability', 'added_date']
+    for field in fields:
         if field in data:
             update_parts.append(f"{field} = :{field}")
             update_values[field] = data[field]
@@ -224,7 +254,7 @@ def filter_and_sort_pets():
             'mustBeLeashed': row.must_be_leashed,
             'petAvailability': row.pet_availability,
             'petPicture': row.pet_picture,
-            'addedData': row.added_date,
+            'addedDate': row.added_date,
             'petDescription': row.pet_description,
             }
             pets.append(filtered_pet_data)
