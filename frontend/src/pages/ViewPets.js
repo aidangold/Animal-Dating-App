@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
@@ -7,6 +8,8 @@ import './viewpets.css';
 export default function ViewPets () {
     // fetch and store full pet data
     const [fullPetData, setFullPetData] = useState([]);
+
+    const navigate = useNavigate();
     
     useEffect(() => {
         fetch('https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/pets')
@@ -88,21 +91,29 @@ export default function ViewPets () {
     }
 
     return (
-        <div className="pets-table">
-            <table>
-                <tr>
-                    <th></th>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Sex</th>
-                    <th>Breed</th>
-                    <th>Availability</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                {petdata}
-            </table>
-        </div>
+        <>
+            <div className="pets-table">
+                <div className='admin-header'>
+                    <h1>Admin - All Pets</h1>
+                    <button onClick={() => {navigate('/add-pet')}}>
+                            + Add a Pet
+                    </button>
+                </div>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Sex</th>
+                        <th>Breed</th>
+                        <th>Availability</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {petdata}
+                </table>
+            </div>
+        </>
     )
 }

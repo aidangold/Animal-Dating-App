@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../components/AuthProvider';
 import './LogIn.css';
 
 function LogInPage() {
-    const navigate = useNavigate();
+    const auth = useAuth();
+
     const [formData, setFormData] = useState({
         username: '',
         password: ''
@@ -17,42 +19,10 @@ function LogInPage() {
         }));
     };
 
-    const loginUser = (DataToSend) => {
-        fetch('https://animaldatingapp-backend-nzjce52oiq-ue.a.run.app/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(DataToSend),
-        })
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(err => {
-                    throw new Error(err.error);
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Success:', data);
-            // Save user_id and user_name to sessionStorage
-            sessionStorage.setItem('user_id', data.user_id);
-            sessionStorage.setItem('user_name', data.userName);
-            const loginEvent = new CustomEvent('loginSuccess', { detail: { user_name: data.userName } });
-            window.dispatchEvent(loginEvent);
-            alert('Success: You are successfully logged in!');
-            navigate('/match');
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            alert(`Error: ${error.message}`);
-        });
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(formData);
-        loginUser({
+        auth.loginUser({
             userName: formData.username,
             password: formData.password
         });

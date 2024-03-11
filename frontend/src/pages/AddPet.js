@@ -53,7 +53,7 @@ export default function AddPetForm() {
         .then(data => {
             console.log('Success:', data);
             alert('Pet added!')
-            navigate('/');
+            navigate('/view-pets');
         })
         .catch((error) => {
             console.error('Error:', error);

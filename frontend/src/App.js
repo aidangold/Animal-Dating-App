@@ -1,4 +1,6 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import AuthProvider from './components/AuthProvider';
+import PrivateRoute from './components/PrivateRoute';
 import Landing from "./pages/Landing";
 import Matching from "./pages/Matching";
 import Header from "./components/Header";
@@ -14,31 +16,34 @@ import ViewPets from './pages/ViewPets';
 function App() {
 
   return (
-    <>
       <div id="main">
-        <BrowserRouter>
-          <header>
-            <Header />
-          </header>
+        <Router>
+          <AuthProvider>
+            <header>
+              <Header />
+            </header>
 
-          <Routes>
-            <Route path='/' element={<Landing />} />
-            <Route path='/match' element={<Matching />} />
-            <Route path='/signup' element={<SignupPage />} />
-            <Route path='/login' element={<LogInPage />} />
-            <Route path='/forgot-password' element={<ForgotPasswordPage />} />
-            <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
-            <Route path='/retrieve-username' element={<RetrieveUsernamePage />} />
-            <Route path='/add-pet' element={<AddPetForm />} />
-            <Route path='/view-pets' element={<ViewPets /> } />
-          </Routes>
+            <Routes>
+              <Route path='/' element={<Landing />} />
+              <Route path='/match' element={<Matching />} />
+              <Route path='/signup' element={<SignupPage />} />
+              <Route path='/login' element={<LogInPage />} />
+              <Route path='/forgot-password' element={<ForgotPasswordPage />} />
+              <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
+              <Route path='/retrieve-username' element={<RetrieveUsernamePage />} />
+              <Route element={<PrivateRoute />}>
+                <Route path='/add-pet' element={<AddPetForm />} />
+                <Route path='/view-pets' element={<ViewPets /> } />
+              </Route>
+            </Routes>
 
-          <div id="footer">
-            <Footer />
-          </div>
-        </BrowserRouter>
+            <div id="footer">
+              <Footer />
+            </div>
+          </AuthProvider>
+        </Router>
+        
       </div>
-    </>
   )
 }
 

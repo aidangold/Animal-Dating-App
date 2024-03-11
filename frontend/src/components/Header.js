@@ -1,5 +1,6 @@
 import logo from '../images/logo.png';
-import {Outlet, Link} from "react-router-dom";
+import {Outlet, Link, useNavigate} from "react-router-dom";
+import { useAuth } from './AuthProvider';
 import './header.css';
 import React, { useState, useEffect } from 'react';
 
@@ -15,19 +16,18 @@ function Logo() {
 
 // Header component tutorial: https://www.youtube.com/watch?v=0hKFJr1TA6c
 export default function Header() {
+    const navigate = useNavigate();
+    const auth = useAuth();
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [username, setUsername] = useState('');
 
     useEffect(() => {
-        const user = sessionStorage.getItem('user_name');
-        if (user) {
+        if (auth.isLoggedIn) {
             setIsLoggedIn(true);
-            setUsername(user);
         }
 
         const handleLoginSuccess = (event) => {
             setIsLoggedIn(true);
-            setUsername(event.detail.user_name);
         };
 
         window.addEventListener('loginSuccess', handleLoginSuccess);
@@ -39,11 +39,17 @@ export default function Header() {
 
     const handleSelectChange = (event) => {
         if (event.target.value === 'logout') {
-            sessionStorage.removeItem('user_id');
-            sessionStorage.removeItem('user_name');
+            auth.logOut();
             setIsLoggedIn(false);
             console.log('User logged out');
-            setUsername('');
+        }
+        
+        if (event.target.value === 'view-all') {
+            navigate('/view-pets');
+        }
+
+        if (event.target.value === 'add-pet') {
+            navigate('/add-pet');
         }
     };
 
@@ -57,9 +63,15 @@ export default function Header() {
                 </div>
                 <div className="header-nav">
                     <a href="/match">Match with Pets</a>
-                    {username ? (
+                    {isLoggedIn ? (
                         <select className="select-style" onChange={handleSelectChange} value="">
-                            <option value="" disabled>{username}</option>
+                            <option value="" disabled>{auth.username}</option>
+                            {auth.isAdmin && (
+                                <>
+                                <option value="view-all">View All Pets</option>
+                                <option value="add-pet">Add a Pet</option>
+                                </>
+                            )}
                             <option value="logout">Log Out</option>
                         </select>
                     ) : (
