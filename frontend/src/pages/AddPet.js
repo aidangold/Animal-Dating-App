@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './addpet.css';
 
@@ -53,13 +53,24 @@ export default function AddPetForm() {
         .then(data => {
             console.log('Success:', data);
             alert('Pet added!')
-            navigate('/');
+            navigate('/view-pets');
         })
         .catch((error) => {
             console.error('Error:', error);
             alert(`Error: ${error.message}`);
         });
     }
+
+    function checkAuthorization() {
+        const userRole = sessionStorage.getItem('userRole'); // sessionStorage is better than local simple as
+        if (userRole !== 'admin') {
+          navigate('/');
+        }
+      }
+    
+      useEffect(() => {
+        checkAuthorization(); // if auth then not redirected
+      }, []);
 
     return (
         <div id='crud-main'>

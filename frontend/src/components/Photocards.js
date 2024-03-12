@@ -48,7 +48,6 @@ export default function Photocard({ petsData }) {
                 <div className='pet-img'>
                     <img
                     src={pet.petPicture}
-                    height={400}
                     alt={pet.name}
                     />
                 </div>

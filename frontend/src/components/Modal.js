@@ -23,7 +23,9 @@ export default function Modal({ likedPets, toggleLike, toggleModal, pet }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <img src={pet.petPicture} alt={pet.name} />
+      <div className="modal-img">
+        <img src={pet.petPicture} alt={pet.name} />
+      </div>
 
       <h2>{pet.petName}</h2>
       <table>

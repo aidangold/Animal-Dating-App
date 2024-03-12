@@ -1,5 +1,5 @@
 import logo from '../images/logo.png';
-import {Outlet, Link} from "react-router-dom";
+import {Outlet, Link, useNavigate } from "react-router-dom";
 import './header.css';
 import React, { useState, useEffect } from 'react';
 
@@ -17,12 +17,20 @@ function Logo() {
 export default function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const user = sessionStorage.getItem('user_name');
+        
         if (user) {
             setIsLoggedIn(true);
             setUsername(user);
+
+            if (sessionStorage.getItem('userRole') == 'admin') {
+                setIsAdmin(true);
+            }
         }
 
         const handleLoginSuccess = (event) => {
@@ -45,6 +53,14 @@ export default function Header() {
             console.log('User logged out');
             setUsername('');
         }
+
+        if (event.target.value === 'view-all') {
+            navigate('/view-pets');
+        }
+
+        if (event.target.value === 'add-pet') {
+            navigate('/add-pet');
+        }
     };
 
     return (
@@ -56,10 +72,16 @@ export default function Header() {
                     <Link to="/">OSU Adoption Center</Link>
                 </div>
                 <div className="header-nav">
-                    <a href="/match">Match with Pets</a>
+                    <Link to="/match">Match with Pets</Link>
                     {username ? (
                         <select className="select-style" onChange={handleSelectChange} value="">
                             <option value="" disabled>{username}</option>
+                            {isAdmin && (
+                                <>
+                                <option value="view-all">View All Pets</option>
+                                <option value="add-pet">Add a Pet</option>
+                                </>
+                            )}
                             <option value="logout">Log Out</option>
                         </select>
                     ) : (

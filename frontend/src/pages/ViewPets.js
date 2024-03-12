@@ -274,23 +274,29 @@ export default function ViewPets() {
   }
 
   return (
-    <div className="pets-table">
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Sex</th>
-            <th>Breed</th>
-            <th>Availability</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>{petdata}</tbody>
-      </table>
-    </div>
+    <>
+      <div className="pets-table">
+          <div className='admin-header'>
+              <h1>Admin - All Pets</h1>
+              <button onClick={() => {navigate('/add-pet')}}>
+                      + Add a Pet
+              </button>
+          </div>
+          <table>
+              <tr>
+                  <th></th>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Sex</th>
+                  <th>Breed</th>
+                  <th>Availability</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+              </tr>
+              {petdata}
+          </table>
+      </div>
+    </>
   );
 }
