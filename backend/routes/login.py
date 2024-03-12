@@ -17,9 +17,11 @@ def login():
     userName = data.get('userName')
     password = data.get('password')
 
+
     # checks if both username and password are provided in the request
     if not userName or not password:
         return jsonify({'error': 'Username and password are required'}), 400
+
 
     # retrieve the hashed password from the database for the given username
     # the query uses named parameters to prevent SQL injection

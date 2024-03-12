@@ -8,11 +8,13 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import './photocards.css';
 import Modal from './Modal';
+import { addToFavorites, removeFromFavorites } from '../api';
 
 
 export default function Photocard({ petsData }) {
     // like pets functionality
     const [likedPets, setLikedPets] = useState([]);
+    const [userID, setUserID] = useState(null);
 
     function toggleLike(petID) {
         if (likedPets.includes(petID)) {
@@ -97,5 +99,3 @@ export default function Photocard({ petsData }) {
         </>
     );
 }
-
-
