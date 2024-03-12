@@ -60,6 +60,9 @@ export function filterPets(availablePets, isFilter) {
             if (min1 < 0) {
                 min1 = 10
             }
+            if (max1 == 10) {
+                max1 = 30
+            }
             if (max1 < 11) {
                 // if user did not select 5-10
                 if (max1 !== 10) {
@@ -120,6 +123,9 @@ export function filterPets(availablePets, isFilter) {
         if (isFilter[3].includes('w50p')) {
             if (min1 < 0) {
                 min1 = 50
+            }
+            if (max1 == 50) {
+                max1 = 240
             }
             if (max1 < 11) {
                 // if user did not select 25-50
