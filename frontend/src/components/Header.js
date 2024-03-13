@@ -36,6 +36,7 @@ export default function Header() {
         const handleLoginSuccess = (event) => {
             setIsLoggedIn(true);
             setUsername(event.detail.user_name);
+            setIsAdmin(event.detail.user_role === 'admin');
         };
 
         window.addEventListener('loginSuccess', handleLoginSuccess);
@@ -49,9 +50,11 @@ export default function Header() {
         if (event.target.value === 'logout') {
             sessionStorage.removeItem('user_id');
             sessionStorage.removeItem('user_name');
+            sessionStorage.removeItem('userRole');
             setIsLoggedIn(false);
-            console.log('User logged out');
             setUsername('');
+            setIsAdmin(false);
+            console.log('User logged out');
         }
 
         if (event.target.value === 'view-all') {
