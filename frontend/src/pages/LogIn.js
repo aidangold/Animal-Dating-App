@@ -40,7 +40,10 @@ function LogInPage() {
         sessionStorage.setItem('user_name', data.userName);
         sessionStorage.setItem('userRole', data.userRole);
         const loginEvent = new CustomEvent('loginSuccess', {
-          detail: { user_name: data.userName },
+          detail: { 
+            user_name: data.userName,
+            user_role: data.userRole
+           },
         });
         window.dispatchEvent(loginEvent);
         alert('Success: You are successfully logged in!');
@@ -54,7 +57,7 @@ function LogInPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     loginUser({
       userName: formData.username,
       password: formData.password,
